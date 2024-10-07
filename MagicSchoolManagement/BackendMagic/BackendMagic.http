@@ -1,0 +1,6 @@
+@BackendMagic_HostAddress = http://localhost:5123
+
+GET {{BackendMagic_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
