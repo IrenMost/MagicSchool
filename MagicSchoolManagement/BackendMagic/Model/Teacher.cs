@@ -9,17 +9,40 @@ namespace BackendMagic.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
-        public List<Course> AbleToTeachCourses { get; set; }
-        public Course CurrentCourse { get; set; }
+        public ICollection<Course> AbleToTeachCourses { get; set; }
+        public Course CurrentCourse { get; set; } = Course.None;
 
-        public Level Level{ get; set; } // if headmaster 1, otherwise 0
-
-
-
+        public Level Level{ get; set; } // if director 2, headmaster 1, otherwise 0
         public bool isHeadMaster() 
         {
             return this.Level == Level.Headmaster;
         }
+
+        public List<Grade> Grades { get; set; } // osztályai, ahol tanít
+
+        public void EditPointsOfAHouse(House house, uint point, bool isAdd)
+        {
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public void AppointToHeadMaster()
         {
@@ -31,10 +54,14 @@ namespace BackendMagic.Model
             }
 
             this.Level = Level.Headmaster;
-           
+
         }
+
         public void DownGradeToTeacher()
         {
+
+
+
             // Check if the teacher is already a headmaster
             if (this.Level == Level.Teacher)
             {
@@ -42,10 +69,11 @@ namespace BackendMagic.Model
                 throw new InvalidOperationException("This teacher is not a headmaster.");
             }
 
-            
+
             this.Level = Level.Teacher;
-           
+
         }
+
     }
-    }
+ }
     

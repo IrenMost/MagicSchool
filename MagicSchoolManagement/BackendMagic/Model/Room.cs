@@ -4,7 +4,7 @@
     {
         public int RoomId { get; set; }
 
-        public List<Student> Students { get; set; } = new List<Student>();
+        public ICollection<Student> Students { get; set; } = new List<Student>();
         public int MaxCapacity { get; } = 3;
 
         public bool IsFull {

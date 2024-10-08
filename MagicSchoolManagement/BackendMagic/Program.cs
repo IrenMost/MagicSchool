@@ -7,6 +7,10 @@ namespace BackendMagic
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Configuration management
+            builder.Configuration.AddJsonFile("appsettings.json");
+            builder.Configuration.AddUserSecrets<Program>();
+
             // Add services to the container.
 
             builder.Services.AddControllers();

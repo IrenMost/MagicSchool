@@ -2,6 +2,7 @@
 {
     public enum Course
     {
+        None,
         Transfiguration,
         Charms,
         Potions,
