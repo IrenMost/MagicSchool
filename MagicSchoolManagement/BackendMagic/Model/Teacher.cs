@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using BackendMagic.Model.Enums;
 
 namespace BackendMagic.Model
@@ -9,18 +10,24 @@ namespace BackendMagic.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
-        public ICollection<Course> AbleToTeachCourses { get; set; }
-        public Course CurrentCourse { get; set; } = Course.None;
-
+        
         public Level Level{ get; set; } // if director 2, headmaster 1, otherwise 0
+        
+        public Course CurrentCourse { get; set; } = Course.None;
         public bool isHeadMaster() 
         {
             return this.Level == Level.Headmaster;
         }
 
-        public List<Grade> Grades { get; set; } // osztályai, ahol tanít
+        // A teacher has many TeacherGrade (the join table) // az osztályért ahol tanít
+        public List<TeacherGrade> TeacherGrades { get; set; }
 
-        public void EditPointsOfAHouse(House house, uint point, bool isAdd)
+
+        // var gradesForATeacher = teacher.TeacherGrades.Select(tg => tg.Grade).ToList();
+        // public List<Grade> Grades { get; set; } helyett
+
+
+        public void AddOrTakePointsFromAHouse(int HouseId, uint point, bool isAdd)
         {
 
         }

@@ -1,4 +1,5 @@
 ﻿using BackendMagic.Model.Enums;
+using System.Numerics;
 
 namespace BackendMagic.Model
 {
@@ -6,9 +7,11 @@ namespace BackendMagic.Model
     {
         public int HouseElfId { get; set; }
         public string Name { get; set; }
-        public House HouseToWorkFor { get; set; }
         
+
         
+
+
     }
 
 }

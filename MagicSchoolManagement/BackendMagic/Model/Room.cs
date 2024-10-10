@@ -1,4 +1,6 @@
-﻿namespace BackendMagic.Model
+﻿using System.Numerics;
+
+namespace BackendMagic.Model
 {
     public class Room
     {
@@ -13,6 +15,10 @@
                 return Students.Count >= MaxCapacity;
             }
         }
+
+        // Navigation properties
+        public int HouseId { get; set; }
+        public virtual House House { get; set; }
 
     }
 }

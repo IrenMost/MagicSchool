@@ -1,4 +1,5 @@
 ﻿using BackendMagic.Model.Enums;
+using System.Numerics;
 
 namespace BackendMagic.Model
 {
@@ -24,5 +25,7 @@ namespace BackendMagic.Model
 
         public int GradeId { get; set; }    
         public virtual Grade Grade { get; set; }
+
+        
     }
 }
