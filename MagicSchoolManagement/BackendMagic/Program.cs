@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using BackendMagic.Repository.Interfaces;
 using Microsoft.Win32;
 using BackendMagic.Services.Interfaces;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using BackendMagic.Model;
+
 
 
 namespace BackendMagic
@@ -30,16 +34,24 @@ namespace BackendMagic
             void ConfigureServices(IServiceCollection services, IConfiguration configuration)
             {
                 // Add services to the container.
-                builder.Services.AddDbContext<SchoolContext>();
-                builder.Services.AddControllers();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                
+                // db Context 
+                builder.Services.AddDbContext<SchoolContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                
 
                 // Register repositories
                 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
                 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+                builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
                 // Register services
                 builder.Services.AddScoped<IHouseService, HouseService>();
                 builder.Services.AddScoped<ITeacherService, TeacherService>();
+                builder.Services.AddScoped<IStudentService, StudentService>();
+
+              
 
                 builder.Services.AddControllers();
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -66,14 +78,18 @@ namespace BackendMagic
                 using (var scope = app.Services.CreateScope())
                 {
                     var services = scope.ServiceProvider;
+                    var context = services.GetRequiredService<SchoolContext>();
+
+                    context.Database.Migrate();
+                
                     SeedData.Initialize(services).GetAwaiter().GetResult();
                 }
 
-                using (var scope = app.Services.CreateScope())
-                {
-                    var services = scope.ServiceProvider;
-                    await SeedData.Initialize(services);
-                }
+                //using (var scope = app.Services.CreateScope())
+                //{
+                //    var services = scope.ServiceProvider;
+                //    await SeedData.Initialize(services
+                //}
 
             }
             

@@ -9,15 +9,33 @@ namespace BackendMagic.Model
         public int TeacherId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         
         public Level Level{ get; set; } // if director 2, headmaster 1, otherwise 0
         
         public Course CurrentCourse { get; set; } = Course.None;
-        public bool isHeadMaster() 
+
+        public Teacher( string firstName, string lastName, Gender gender, Level level)
         {
-            return this.Level == Level.Headmaster;
+       
+            FirstName = firstName;
+            LastName = lastName;
+            Gender = gender;
+            Level = level;
+            
         }
+
+        public Teacher( string firstName, string lastName, Gender gender, Level level, Course currentCourse)
+        {
+       
+            FirstName = firstName;
+            LastName = lastName;
+            Gender = gender;
+            Level = level;
+            CurrentCourse = currentCourse;
+
+        }
+
 
         // A teacher has many TeacherGrade (the join table) // az osztályért ahol tanít
         public List<TeacherGrade> TeacherGrades { get; set; }
@@ -25,12 +43,6 @@ namespace BackendMagic.Model
 
         // var gradesForATeacher = teacher.TeacherGrades.Select(tg => tg.Grade).ToList();
         // public List<Grade> Grades { get; set; } helyett
-
-
-        public void AddOrTakePointsFromAHouse(int HouseId, uint point, bool isAdd)
-        {
-
-        }
 
 
 

@@ -1,20 +1,26 @@
 ﻿using BackendMagic.Model;
+using BackendMagic.Repository;
 using BackendMagic.Repository.Interfaces;
 using BackendMagic.Services.Interfaces;
 
 namespace BackendMagic.Services
 {
- // Contains the business logic.
- // It fetches data from the repository and processes it according to the business rules
- // before returning it to the controller.
+    // Contains the business logic.
+    // It fetches data from the repository and processes it according to the business rules
+    // before returning it to the controller.
     public class HouseService : IHouseService
-        {
-            private readonly IHouseRepository _houseRepository;
+    {
+        private readonly IHouseRepository _houseRepository;
+        private readonly ITeacherRepository _teacherRepository;
+        private readonly IStudentRepository _studentRepository;
 
-            public HouseService(IHouseRepository houseRepository)
-            {
-                _houseRepository = houseRepository;
-            }
+
+        public HouseService(IHouseRepository houseRepository, ITeacherRepository teacherRepository, IStudentRepository studentRepository)
+        {
+            _houseRepository = houseRepository;
+            _teacherRepository = teacherRepository;
+            _studentRepository = studentRepository;
+        }
 
         public async Task<List<House>> GetAllHouses()
         {
@@ -32,9 +38,22 @@ namespace BackendMagic.Services
             return house;
         }
 
-        public Task<House> UpdateHouseAddHeadMasterByHouseId(int houseId, int teacherId)
+        public async Task<House> UpdateHouseAddHeadMasterByHouseId(int houseId, int teacherId)
         {
-            throw new NotImplementedException();
+            var house = await _houseRepository.GetHouseById(houseId);
+            var teacher = await _teacherRepository.GetTeacherById(teacherId);
+            if (teacher == null)
+            {
+                throw new KeyNotFoundException("no such teacher ");
+            }
+            if (house == null)
+            {
+                throw new KeyNotFoundException("no such house ");
+            }
+
+            house.HeadMaster = teacher;
+            await _houseRepository.UpdateHouse(house);
+            return house;
         }
 
         public async Task<House> UpdatePoints(int houseId, uint points, bool isAdd)
@@ -42,17 +61,57 @@ namespace BackendMagic.Services
             var house = await _houseRepository.GetHouseById(houseId);
             if (house != null)
             {
-                house.GetOrLoosePoints(points, isAdd);
+
+                if (points < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(points));
+                }
+                if (isAdd)
+                {
+                    house.Points += points;
+                }
+                else if (points > house.Points)
+                {
+                    house.Points = 0;
+                }
+                else
+                {
+                    house.Points -= points;
+                }
                 await _houseRepository.UpdateHouse(house);
+               
             }
             return house;
+
         }
 
-        public Task<House> UpdateStudentListByHouseId(int houseid, int studentId)
+        public async Task<House> UpdateStudentListByHouseId(int houseId, int studentId)
         {
-            throw new NotImplementedException();
+            var house = await _houseRepository.GetHouseById(houseId);
+            var student = await _studentRepository.GetStudentById(studentId);
+
+            if (house == null)
+            {
+                throw new KeyNotFoundException("no such house ");
+            }
+            if (student == null)
+            {
+                throw new KeyNotFoundException("no such studnet ");
+            }
+
+            if(house.Students.Count == 0)
+            {
+                house.Students = new List<Student>();
+            }
+            house.Students.Add(student);
+            await _houseRepository.UpdateHouse(house);
+            return house;
         }
     }
-    
+
 }
+
+
+
+
 

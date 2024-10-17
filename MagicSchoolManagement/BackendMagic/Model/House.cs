@@ -18,40 +18,16 @@ namespace BackendMagic.Model
 
 
 
-        public House(int houseId, HouseName houseName, uint points) {
-            HouseId = houseId;
+        public House( HouseName houseName, uint points, int teacherId) {
+           
             HouseName = houseName;
             Points = points;
+            TeacherId = teacherId;
         }
-        // to get all the properties
-        public void ChangeHeadMaster(Teacher teacher)
-        {
-           
-            this.HeadMaster = teacher;
-        }
+        
+       
 
-        public void AddStudentToAHouse(Student student) {
-            this.Students.Add(student);
 
-        }
-   
-        public void GetOrLoosePoints(uint point, bool isAdd)
-        {
-            if (point < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(point));
-            }
-            if (isAdd)
-            {
-                this.Points += point;
-            }
-            else if (point > this.Points) {
-                this.Points = 0;
-            }
-            else
-            {
-                this.Points -= point;
-            }
-        }
+       
     }
 }
