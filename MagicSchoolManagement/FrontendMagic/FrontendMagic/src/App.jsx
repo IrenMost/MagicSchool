@@ -1,35 +1,100 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import React, { useEffect, useState } from 'react';
+import HouseList from './pages/HouseList';
+import HouseId from './pages/HouseId';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [cursorX, setCursorX] = useState(0);
+    const [cursorY, setCursorY] = useState(0);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const isTouchDevice = () => {
+        try {
+            document.createEvent('TouchEvent');
+            return true;
+        } catch (e) {
+            return false;
+        }
+    };
+
+    const move = (e) => {
+        const touchEvent = e.touches ? e.touches[0] : e;
+        const x = !isTouchDevice() ? e.clientX : touchEvent.clientX;
+        const y = !isTouchDevice() ? e.clientY : touchEvent.clientY;
+
+        setCursorX(x);
+        setCursorY(y);
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousemove', move);
+        document.addEventListener('touchmove', move);
+
+        return () => {
+            document.removeEventListener('mousemove', move);
+            document.removeEventListener('touchmove', move);
+        };
+    }, []);
+
+    return (
+        <>
+            <div className="app-container">
+                <p>MAJOOM</p>
+                <HouseList />
+              
+
+                <style>
+                    {`
+                    * {
+                        margin: 0;
+                        cursor: none;
+                    }
+
+                    body {
+                        background-color: #0984e3;
+                        height: 100vh;
+                        overflow: hidden;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    /* Wand handle (rectangle) */
+                    #cursor {
+                        position: absolute;
+                        width: 5px; /* Narrow rectangular handle */
+                        height: 40px; /* Lengthen handle */
+                        background-color: brown;
+                        transform: translate(-50%, -50%) rotate(-45deg); /* Rotate to point left */
+                        pointer-events: none;
+                    }
+
+                    /* Starburst at the top of the wand */
+                    #cursor-star {
+                        position: absolute;
+                        width: 12px;
+                        height: 12px;
+                        background-color: brown;
+                        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+                        transform: translate(-50%, -50%) rotate(-45deg); /* Rotate to match handle */
+                        pointer-events: none;
+                    }
+                `}
+                </style>
+
+                {/* Wand handle */}
+                <div
+                    id="cursor"
+                    style={{ left: `${cursorX}px`, top: `${cursorY}px` }}
+                ></div>
+
+                {/* Starburst on top of the wand */}
+                <div
+                    id="cursor-star"
+                    style={{ left: `${cursorX}px`, top: `${cursorY - 20}px` }}
+                ></div>
+            </div>
+        </>
+    );
 }
 
-export default App
+export default App;
