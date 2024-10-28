@@ -57,7 +57,7 @@ namespace BackendMagic
                 {
                     options.AddDefaultPolicy(builder =>
                     {
-                        builder.WithOrigins("https://localhost:7135")
+                        builder.WithOrigins("http://localhost:5123", "https://localhost:7135")
                                 .AllowAnyMethod()                      // Allow GET, POST, PUT, DELETE, etc.
                                 .AllowAnyHeader()                      // Allow custom headers
                                 .AllowCredentials();                   // Allow cookies or other credentials if needed
