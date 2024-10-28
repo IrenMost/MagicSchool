@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 async function fetchAllHouseData() {
     try {
-        const response = await fetch(`/api/House/all`, {
+        const response = await fetch(`https://localhost:7135/House/all`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
         });

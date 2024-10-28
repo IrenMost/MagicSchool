@@ -57,7 +57,7 @@ namespace BackendMagic
                 {
                     options.AddDefaultPolicy(builder =>
                     {
-                        builder.WithOrigins("http://localhost:5123", "https://localhost:7135")
+                        builder.WithOrigins("http://localhost:5173")
                                 .AllowAnyMethod()                      // Allow GET, POST, PUT, DELETE, etc.
                                 .AllowAnyHeader()                      // Allow custom headers
                                 .AllowCredentials();                   // Allow cookies or other credentials if needed
@@ -78,12 +78,15 @@ namespace BackendMagic
                     app.UseSwaggerUI();
                 }
 
+                app.UseCors();
                 app.UseHttpsRedirection();
 
                 app.UseAuthorization();
-
+             
 
                 app.MapControllers();
+           
+
 
                 // Seed data
                 using (var scope = app.Services.CreateScope())

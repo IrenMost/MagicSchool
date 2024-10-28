@@ -50,7 +50,7 @@ function App() {
                     }
 
                     body {
-                        background-color: #0984e3;
+                        background-color: #e6823c;
                         height: 100vh;
                         overflow: hidden;
                         display: flex;

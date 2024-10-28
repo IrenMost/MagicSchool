@@ -31,12 +31,44 @@ namespace BackendMagic.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<List<House>>> GetAllFourHouses()
         {
-            var houses = await _houseService.GetAllHouses();
-            if (houses == null || houses.Count == 0)
+            try
             {
-                return NotFound("No houses were found.");
+                var houses = await _houseService.GetAllHouses();
+                if (houses == null || houses.Count == 0)
+                {
+                    return NotFound("No houses were found.");
+                }
+                var houseDtos = new List<HouseDto>();
+
+                // Map each House to HouseDto
+                foreach (var house in houses)
+                {
+                    var houseDto = new HouseDto
+                    {
+                        HouseId = house.HouseId,
+                        HouseName = house.HouseName.ToString(), 
+                        Points = house.Points,
+                        TeacherId = house.TeacherId,
+                        Students = house.Students,
+                        Rooms = house.Rooms
+                    };
+
+                    // Add the DTO to the list
+                    houseDtos.Add(houseDto);
+                }
+
+                // Return the list of DTOs
+                return Ok(houseDtos);
+
+
+
+       
             }
-            return Ok(houses);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching houses");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{houseId}")]
