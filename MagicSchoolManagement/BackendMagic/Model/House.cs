@@ -24,10 +24,10 @@ namespace BackendMagic.Model
             Points = points;
             TeacherId = teacherId;
         }
-        
-       
 
 
        
+
+
     }
 }

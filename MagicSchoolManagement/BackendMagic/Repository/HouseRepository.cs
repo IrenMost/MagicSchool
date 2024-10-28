@@ -22,7 +22,7 @@ namespace BackendMagic.Repository
 
         public async Task AddAsync(House house)
         {
-            await _dbContext.AddAsync(house);
+            await _dbContext.Houses.AddAsync(house);
             await _dbContext.SaveChangesAsync();
         }
 

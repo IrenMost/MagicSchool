@@ -51,7 +51,18 @@ namespace BackendMagic
                 builder.Services.AddScoped<ITeacherService, TeacherService>();
                 builder.Services.AddScoped<IStudentService, StudentService>();
 
-              
+                // add CORS
+
+                builder.Services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(builder =>
+                    {
+                        builder.WithOrigins("https://localhost:7135")
+                                .AllowAnyMethod()                      // Allow GET, POST, PUT, DELETE, etc.
+                                .AllowAnyHeader()                      // Allow custom headers
+                                .AllowCredentials();                   // Allow cookies or other credentials if needed
+                    });
+                });
 
                 builder.Services.AddControllers();
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

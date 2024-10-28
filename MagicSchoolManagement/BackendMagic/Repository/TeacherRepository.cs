@@ -4,7 +4,7 @@ using BackendMagic.Model.Enums;
 using BackendMagic.Repository.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
+
 
 
 namespace BackendMagic.Repository
@@ -31,8 +31,16 @@ namespace BackendMagic.Repository
 
         public async Task<List<Teacher>> GetAllTeachers()
         {
-            
-            return await _dbContext.Teachers.ToListAsync();
+
+            try
+            {
+                return await _dbContext.Teachers.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, possibly log them
+                throw new Exception("An error occurred while retrieving teachers.", ex);
+            }
         }
 
         public async Task<Teacher> GetTeacherById(int teacherId)

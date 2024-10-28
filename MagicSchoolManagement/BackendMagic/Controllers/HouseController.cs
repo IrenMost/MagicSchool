@@ -4,6 +4,7 @@ using BackendMagic.Services.Interfaces;
 using BackendMagic.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
+using BackendMagic.DTOs;
 
 namespace BackendMagic.Controllers 
 // Handles HTTP requests and responses, delegating all business logic to the service layer.
@@ -23,6 +24,7 @@ namespace BackendMagic.Controllers
             _logger = logger;   
             _configuration = configuration;
             _houseService = houseService;
+           
            
         }
 
@@ -45,7 +47,19 @@ namespace BackendMagic.Controllers
             {
                 return NotFound("No house found.");
             }
-            return Ok(house);
+
+    
+            var houseDto = new HouseDto
+            {
+                
+                HouseId = house.HouseId,
+                HouseName = house.HouseName.ToString(), // Convert enum to string
+                Points = house.Points,
+                TeacherId = house.TeacherId,
+                Students = house.Students,
+                Rooms = house.Rooms
+            };
+            return Ok(houseDto);
         }
 
         [HttpPatch("{houseId}/updatePoints")]
@@ -62,32 +76,7 @@ namespace BackendMagic.Controllers
             }
         }
 
-        //*****
-
-
-        //[HttpPatch("/updatePoints/houseId")]
-
-        //public async Task<ActionResult<House>> UpdatePoints(int houseId, uint point, bool IsAdd)
-        //{
-        //    if (point < 0)
-        //    {
-        //        return BadRequest("Invalid point value. Points cannot be negative.");
-        //    }
-
-        //    var house = await dbContext.Houses.SingleOrDefaultAsync(h => h.HouseId == houseId);
-
-        //    if (house == null)
-        //    {
-        //        return NotFound("no house found");
-        //    }
-        //    if (house != null)
-        //    {
-        //        house.GetOrLoosePoints(point, IsAdd);
-        //    }
-
-        //    await dbContext.SaveChangesAsync();
-        //    return Ok(house);
-        //}
+       
 
         //TODO 1, 2,
 
