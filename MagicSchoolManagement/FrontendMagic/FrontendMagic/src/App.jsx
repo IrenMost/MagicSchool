@@ -50,7 +50,7 @@ function App() {
                     }
 
                     body {
-                        background-color: #e6823c;
+                        background-color: #1a2a3a;
                         height: 100vh;
                         overflow: hidden;
                         display: flex;
@@ -63,7 +63,7 @@ function App() {
                         position: absolute;
                         width: 5px; /* Narrow rectangular handle */
                         height: 40px; /* Lengthen handle */
-                        background-color: brown;
+                        background-color: #a8e6cf;
                         transform: translate(-50%, -50%) rotate(-45deg); /* Rotate to point left */
                         pointer-events: none;
                     }
@@ -73,7 +73,7 @@ function App() {
                         position: absolute;
                         width: 12px;
                         height: 12px;
-                        background-color: brown;
+                        background-color: #a8e6cf;
                         clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
                         transform: translate(-50%, -50%) rotate(-45deg); /* Rotate to match handle */
                         pointer-events: none;

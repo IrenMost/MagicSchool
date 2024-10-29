@@ -2,7 +2,7 @@
 // itt lesz az összes adat fetch
 
 import { useState, useEffect } from "react";
-/*import PointUpdater from "../components/PointUpdater"*/
+import PointUpdater from "../components/PointUpdater"
 
 
 
@@ -29,6 +29,10 @@ const HouseList = () => {
     const [loading, setLoading] = useState(true);
     const [houseList, setHouseList] = useState(null);
 
+    const [updatedHouse, setUpdatedHouse] = useState(false);
+    
+
+
 
     useEffect(() => {
         fetchAllHouseData().then((data) => {
@@ -36,7 +40,7 @@ const HouseList = () => {
             console.log(data);
             setLoading(false);
         });
-    }, []);
+    }, [updatedHouse]);
 
 
 
@@ -46,15 +50,19 @@ const HouseList = () => {
     if (!houseList || houseList.length === 0) {
         return <div>No houses found.</div>;
     }
+    const houseColors = ["red-gold", "yellow-black", "blue-bronze", "green-silver"];
 
-    return <div>
-        {houseList && houseList.map((house) => 
-        (<div key={house.houseId}>
-            <p>id: {house.houseId}</p>
+    return <div className="house-container">
+        {houseList && houseList.map((house, index) => 
+        (<div key={house.houseId} className={`house-box ${houseColors[index]}`}>
+           
             <h1>{house.houseName}</h1>
             <h2>Current points: {house.points}</h2>
 
-            {/*<PointUpdater houseId={house.houseId} />*/}
+            <PointUpdater
+                houseId={house.houseId}
+                setUpdatedHouse={setUpdatedHouse }
+                />
         </div>))}
 
     </div>

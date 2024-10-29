@@ -1,42 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap');
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Mountains of Christmas', cursive;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+    font-family: 'Mountains of Christmas', cursive;
 }
 
+    .logo:hover {
+        filter: drop-shadow(0 0 2em #646cffaa);
+    }
+
+    .logo.react:hover {
+        filter: drop-shadow(0 0 2em #61dafbaa);
+    }
+
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
 }
 
 .card {
-  padding: 2em;
+    padding: 2em;
+    font-family: 'Mountains of Christmas', cursive;
 }
 
 .read-the-docs {
-  color: #888;
+    color: #888;
+}
+
+.house-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.house-box {
+    width: 250px; /* Increase width */
+    height: 350px; /* Increase height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem; /* Extra padding */
+    color: white;
+    font-family: 'Mountains of Christmas', cursive;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Define each house's specific color scheme */
+.red-gold {
+    background: linear-gradient(to bottom, #d05030, #f5c78a); /* Muted red to gold */
+}
+
+.yellow-black {
+    background: linear-gradient(to bottom, #e1c55c, #4c4c4c); /* Soft yellow to dark gray */
+}
+
+.blue-bronze {
+    background: linear-gradient(to bottom, #6a98c5, #bc9b70); /* Muted blue to bronze */
+}
+
+.green-silver {
+    background: linear-gradient(to bottom, #4c8c4a, #a6a6a6); /* Soft green to light gray */
 }

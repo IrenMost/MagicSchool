@@ -1,60 +1,78 @@
-﻿//import { Outlet } from "react-router-dom";
+﻿import { Outlet } from "react-router-dom";
+import './PointUpdater.css';
+import { useState, } from "react";
+import PropTypes from "prop-types"; // Import prop-types
 
-//const PointUpdater = (houseList) => {
-//    const [updatedPoints, setUpdatedPoints] = useState(false);
-//    const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
-//    const [isAdd, setIsAdd] = useState(true)
+const PointUpdater = ({
+    houseId,
+    updatedHouse,
+    setUpdatedHouse 
+}) => {
+    const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
+    const [isAdd, setIsAdd] = useState(true)
 
+    const handleSubmit = async () => {
 
-//    return (
-//        <div className="container">
+        console.log("clicked");
+        console.log(isAdd);
+        try {
+            const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ houseId: houseId, points: pointsToAddOrTakeaway, isAdd: isAdd }),
+            });
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            // Update state or handle success here
+            setUpdatedHouse(true);
+        } catch (error) {
+            console.error("Error updating points:", error);
+        }
+    };
 
-//            <div>
-//                <div className="HouseData">
+    return (
+       <div className="point-container">
+           {/* Input field, positioned above the button group */}
+            <input
+                type="number"
+                value={pointsToAddOrTakeaway}
+                onChange={(e) => { setPointsToAddOrTakeaway(e.target.value); console.log(e.target.value) }}
+                id={houseId}
+            />
 
-//                    {houseList && houseList.map((house) => (
-//                        <container key={house.houseId}>
-//                            <h2>{house.houseId}</h2>
-//                            <h1>{house.name}</h1>
-//                            <h2>{house.headmaster}</h2>
-//                            <h2>{house.points}</h2>
+            {/* Group for buttons, kept side-by-side */}
+            <div className="button-input-group">
+                <button
+                    type="submit"
+                    name="submit_add"
+                    value="submit_a"
+                    onClick={() => { setIsAdd(true); handleSubmit(); }}
+                >
+                    Add Points
+                </button>
 
-//                            <form className="updatePoints" onSubmit={updatedPoints}>
-//                                <div className="control">
-//                                    <label htmlFor="points">Points:</label>
-//                                    <input
-//                                        type="number"
-//                                        value={pointsToAddOrTakeaway}
-//                                        onChange={(e) => setPointsToAddOrTakeaway(e.target.value)}
-//                                        name="pointsToAddOrTakeaway"
-//                                        id={house.houseId}
-//                                    />
-//                                </div>
+                <button
+                    type="submit"
+                    name="submit_takeaway"
+                    value="submit_t"
+                    onClick={() => { setIsAdd(false); handleSubmit(); }
+                        }
+                >
+                    Take Away Points
+                </button>
+                </div>
+           
+        </div>
+    );
+};
 
-//                                <div className="buttons">
-//                                    <button type="submit"
-//                                        value="add">Add Points </button>
+PointUpdater.propTypes = {
+    houseId: PropTypes.string.isRequired,
+    updatedHouse: PropTypes.bool.isRequired,
+    setUpdatedHouse: PropTypes.func.isRequired
+};
 
-//                                </div>
-
-
-//                                <div className="buttons">
-//                                    <button type="submit"
-//                                        value="takeaway">Take Away Points</button>
-
-//                                </div>
-//                            </form>
-
-//                        </container>
-//                    ))}
-
-
-
-//                </div>
-//            </div>
-
-//        </div>
-//    );
-//};
-
-//export default PointUpdater;
+export default PointUpdater;

@@ -1,0 +1,71 @@
+﻿/* Styles for PointUpdater container */
+.point-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Container for buttons and input to keep buttons side-by-side */
+.button-input-group {
+    display: flex; /* Enables side-by-side layout */
+    gap: 1rem; /* Space between elements */
+    align-items: center; /* Centers elements vertically within the group */
+}
+/* Input field styling */
+.point-container input[type="number"] {
+    width: 120px;
+    padding: 0.5rem;
+    border-radius: 20px;
+    border: 2px solid #ddd;
+    font-size: 1.2rem;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+}
+/* Adjusted styles for Add Points button */
+.point-container button[name="submit_add"] {
+    background-color: #4caf50; /* Softer green */
+    color: white;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2mm solid #1a2a3a; /* Keep the border color */
+    font-size: 1.1rem;
+    font-family: 'Mountains of Christmas', cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-20deg);
+    transition: all 0.3s ease;
+}
+
+/* Adjusted styles for Take Away Points button */
+.point-container button[name="submit_takeaway"] {
+    background-color: #e57373; /* Softer red */
+    color: white;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2mm solid #1a2a3a; /* Keep the border color */
+    font-size: 1.1rem;
+    font-family: 'Mountains of Christmas', cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(20deg);
+    transition: all 0.3s ease;
+}
+
+/* Optional: Adjust hover effects to be softer */
+.point-container button:hover {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    transform: scale(1.03) rotate(0deg); /* Subtle scaling */
+}
+
+.point-container button:active {
+    transform: scale(0.95);
+}
+
+
