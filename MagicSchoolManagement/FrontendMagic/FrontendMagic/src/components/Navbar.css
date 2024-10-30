@@ -1,0 +1,33 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: #1a2a3a; /* Matches the background color */
+}
+
+    /* Styling for individual buttons in the nav bar */
+    .nav-bar button {
+        width: 80px;
+        height: 40px;
+        border-radius: 20px; /* Oval shape */
+        border: 2px solid #a8e6cf; /* Matches mouse color */
+        background-color: #1f3a4a; /* Slightly darker than the background color */
+        color: #a8e6cf; /* Matches mouse color */
+        font-size: 1rem;
+        font-family: 'Mountains of Christmas', cursive;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        /* Hover effect to add a subtle glow */
+        .nav-bar button:hover {
+            background-color: #1a2a3a; /* Matches the main background */
+            box-shadow: 0 0 8px #a8e6cf;
+            transform: scale(1.05);
+        }
+
+        /* Active state for a slight visual press effect */
+        .nav-bar button:active {
+            transform: scale(0.95);
+        }

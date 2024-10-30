@@ -87,3 +87,8 @@
 .green-silver {
     background: linear-gradient(to bottom, #4c8c4a, #a6a6a6); /* Soft green to light gray */
 }
+
+.header-logo {
+    width: 140px;
+    height: 140px;
+}

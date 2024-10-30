@@ -1,16 +1,16 @@
 ﻿import { Outlet } from "react-router-dom";
 
-const Layout = () => {
+const LayoutHome = () => {
     return (
         <div className="container">
-           
+
             <main className="main">
                 <Outlet />
-                <p> majmok gyertek </p>
+                <p> welcome USER </p>
             </main>
 
         </div>
     );
 };
 
-export default Layout;
+export default LayoutHome;

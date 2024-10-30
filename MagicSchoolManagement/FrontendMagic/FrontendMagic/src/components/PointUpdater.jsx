@@ -15,6 +15,7 @@ const PointUpdater = ({
 
         console.log("clicked");
         console.log(isAdd);
+       
         try {
             const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
                 method: "PATCH",
@@ -39,7 +40,7 @@ const PointUpdater = ({
             <input
                 type="number"
                 value={pointsToAddOrTakeaway}
-                onChange={(e) => { setPointsToAddOrTakeaway(e.target.value); console.log(e.target.value) }}
+                onChange={(e) => { setPointsToAddOrTakeaway(e.target.value); console.log(e.target.value);  console.log(e.target.id); }}
                 id={houseId}
             />
 
@@ -49,7 +50,7 @@ const PointUpdater = ({
                     type="submit"
                     name="submit_add"
                     value="submit_a"
-                    onClick={() => { setIsAdd(true); handleSubmit(); }}
+                    onClick={() => { setIsAdd(true); handleSubmit();  }}
                 >
                     Add Points
                 </button>
@@ -69,10 +70,10 @@ const PointUpdater = ({
     );
 };
 
-PointUpdater.propTypes = {
-    houseId: PropTypes.string.isRequired,
-    updatedHouse: PropTypes.bool.isRequired,
-    setUpdatedHouse: PropTypes.func.isRequired
-};
+//PointUpdater.propTypes = {
+//    houseId: PropTypes.string.isRequired,
+//    updatedHouse: PropTypes.bool.isRequired,
+//    setUpdatedHouse: PropTypes.func.isRequired
+//};
 
 export default PointUpdater;

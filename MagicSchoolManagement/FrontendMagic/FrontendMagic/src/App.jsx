@@ -1,11 +1,16 @@
 import './App.css';
+import { useRoutes } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import HouseList from './pages/HouseList';
-import HouseId from './pages/HouseId';
+import LayoutHome from './components/LayoutHome';
+import LayoutTeacher from './components/LayoutTeacher';
+import HomePage from "./pages/HomePage";
 
 function App() {
     const [cursorX, setCursorX] = useState(0);
     const [cursorY, setCursorY] = useState(0);
+
+    //const [globalData, setGlobalData] = useState(null); // userId, userName, password, currentRole
 
     const isTouchDevice = () => {
         try {
@@ -25,6 +30,65 @@ function App() {
         setCursorY(y);
     };
 
+    const routes = useRoutes([
+        {
+            path: "/",
+            element: <LayoutHome />,
+            children: [
+                { index: true, element: <HomePage /> },
+                //{ path: "login", element: <Login /> },
+                //{ path: "test", element: <TestPage /> },
+                //{ path: "aboutus", element: <AboutUs /> },
+                //{ path: "register", element: <Register /> },
+                //{ path: "logout", element: <Logout /> },
+                { path: "", element: <HomePage /> },
+
+                //{ path: "typeCreator", element: <TypeCreator /> },
+                //{ path: "typeList", element: <TypeList /> },
+                //{ path: "typeUpdater/:typeId", element: <TypeUpdater /> },
+                //{
+                //    path: "createPlanDetail",
+                //    element: <CreatePlanDetail />,
+                //},
+                //{
+                //    path: "createPlan",
+                //    element: <CreatePlan />,
+                //},
+                //{
+                //    path: "plans",
+                //    element: <AllPlans />,
+                //},
+                //{
+                //    path: "planEdit/:planId",
+                //    element: <PlanEditor />,
+                //},
+                //{
+                //    path: "bucketList",
+                //    element: <Subscriptions />,
+                //},
+                //{
+                //    path: "MyBucketList",
+                //    element: <UserSubscriptions />,
+                //},
+                //{
+                //    path: "subscriberDetail",
+                //    element: <SubscriptionDetail />,
+                //},
+                
+                // Add other routes here
+            ],
+        },
+        {
+            path: "/teacher",
+            element: <LayoutTeacher />, 
+            children: [{ index: true, element: <HouseList /> },
+                { path: "HouseList", element: <HouseList /> }
+            ],
+            
+        },
+    ]);
+
+
     useEffect(() => {
         document.addEventListener('mousemove', move);
         document.addEventListener('touchmove', move);
@@ -39,8 +103,8 @@ function App() {
         <>
             <div className="app-container">
                 <p>MAJOOM</p>
-                <HouseList />
-              
+               {/* <HouseList />*/}
+                {routes}
 
                 <style>
                     {`
