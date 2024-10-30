@@ -1,28 +1,45 @@
-﻿import { Outlet } from "react-router-dom";
+﻿
 import './PointUpdater.css';
 import { useState, } from "react";
-import PropTypes from "prop-types"; // Import prop-types
+import PropTypes from "prop-types"; 
 
 const PointUpdater = ({
     houseId,
-    updatedHouse,
+   
     setUpdatedHouse 
 }) => {
     const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
-    const [isAdd, setIsAdd] = useState(true)
+    
 
-    const handleSubmit = async () => {
+    const handleSubmitPlus = async () => {
 
-        console.log("clicked");
-        console.log(isAdd);
-       
         try {
             const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ houseId: houseId, points: pointsToAddOrTakeaway, isAdd: isAdd }),
+                body: JSON.stringify({ houseId: houseId, points: parseInt(pointsToAddOrTakeaway), isAdd: true }),
+            });
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            // Update state or handle success here
+            setUpdatedHouse(true);
+        } catch (error) {
+            console.error("Error updating points:", error);
+        }
+    };
+
+    const handleSubmitMinus = async () => {
+
+        try {
+            const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ houseId: houseId, points: parseInt(pointsToAddOrTakeaway), isAdd: false }),
             });
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
@@ -50,7 +67,7 @@ const PointUpdater = ({
                     type="submit"
                     name="submit_add"
                     value="submit_a"
-                    onClick={() => { setIsAdd(true); handleSubmit();  }}
+                    onClick={() => handleSubmitPlus()}
                 >
                     Add Points
                 </button>
@@ -59,8 +76,8 @@ const PointUpdater = ({
                     type="submit"
                     name="submit_takeaway"
                     value="submit_t"
-                    onClick={() => { setIsAdd(false); handleSubmit(); }
-                        }
+                    onClick={() =>  handleSubmitMinus() }
+                        
                 >
                     Take Away Points
                 </button>
@@ -70,10 +87,10 @@ const PointUpdater = ({
     );
 };
 
-//PointUpdater.propTypes = {
-//    houseId: PropTypes.string.isRequired,
-//    updatedHouse: PropTypes.bool.isRequired,
-//    setUpdatedHouse: PropTypes.func.isRequired
-//};
+PointUpdater.propTypes = {
+    houseId: PropTypes.string.isRequired,
+   
+    setUpdatedHouse: PropTypes.func.isRequired
+};
 
 export default PointUpdater;
