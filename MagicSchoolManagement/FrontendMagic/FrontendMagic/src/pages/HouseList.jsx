@@ -30,7 +30,7 @@ const HouseList = () => {
     const [loading, setLoading] = useState(true);
     const [houseList, setHouseList] = useState(null);
 
-    const [updatedHouse, setUpdatedHouse] = useState(false);
+    const [counter, setCounter] = useState(0);
     
 
 
@@ -41,7 +41,7 @@ const HouseList = () => {
             console.log(data);
             setLoading(false);
         });
-    }, [updatedHouse]);
+    }, [counter]);
 
 
 
@@ -68,7 +68,8 @@ const HouseList = () => {
 
                 <PointUpdater
                     houseId={house.houseId}
-                    setUpdatedHouse={setUpdatedHouse}
+                   
+                    setCounter={setCounter}
                 />
             </div>
         ))}

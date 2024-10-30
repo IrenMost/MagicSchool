@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 const PointUpdater = ({
     houseId,
    
-    setUpdatedHouse 
+    setCounter 
 }) => {
     const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
     
@@ -25,7 +25,7 @@ const PointUpdater = ({
                 throw new Error(`Error: ${response.status}`);
             }
             // Update state or handle success here
-            setUpdatedHouse(true);
+            setCounter((prevCounter) => { return prevCounter + 1});
         } catch (error) {
             console.error("Error updating points:", error);
         }
@@ -45,7 +45,7 @@ const PointUpdater = ({
                 throw new Error(`Error: ${response.status}`);
             }
             // Update state or handle success here
-            setUpdatedHouse(true);
+            setCounter((prevCounter) => { return prevCounter + 1 });
         } catch (error) {
             console.error("Error updating points:", error);
         }
@@ -90,7 +90,7 @@ const PointUpdater = ({
 PointUpdater.propTypes = {
     houseId: PropTypes.string.isRequired,
    
-    setUpdatedHouse: PropTypes.func.isRequired
+    setCounter: PropTypes.func.isRequired
 };
 
 export default PointUpdater;
