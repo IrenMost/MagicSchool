@@ -5,6 +5,7 @@ using BackendMagic.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
 using BackendMagic.DTOs;
+using Azure.Core;
 
 namespace BackendMagic.Controllers 
 // Handles HTTP requests and responses, delegating all business logic to the service layer.
@@ -95,11 +96,12 @@ namespace BackendMagic.Controllers
         }
 
         [HttpPatch("updatePoints/{houseId}")]
-        public async Task<ActionResult<House>> UpdatePoints(int houseId, uint points, bool isAdd)
+        public async Task<ActionResult<House>> UpdatePoints(int houseId, [FromBody] UpdateHousePointsReq updateHousePointsReq)
         {
             try
             {
-                var house = await _houseService.UpdatePoints(houseId, points, isAdd);
+                var house = await _houseService.UpdatePoints(houseId, updateHousePointsReq.Points, updateHousePointsReq.IsAdd);
+
                 return Ok(house);
             }
             catch (Exception ex)
