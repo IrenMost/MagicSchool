@@ -1,0 +1,89 @@
+/* Main container for houses */
+.house-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 2rem;
+    max-width: 100%; /* Ensures container width adapts to fit four cards */
+}
+
+/* House box styling */
+.house-box {
+    width: 200px; /* Adjusted width */
+    height: 300px; /* Adjusted height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #1f3a4a; /* Main background color for the boxes */
+    color: #a8e6cf; /* Text color */
+    font-family: 'Mountains of Christmas', cursive;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Oval container for the house name */
+.house-name-oval {
+    width: 180px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #d05030, #f5c78a); /* Example gradient */
+    border-radius: 25px;
+    margin-bottom: 1rem;
+}
+
+/* Individual color themes for each house */
+.red-gold .house-name-oval {
+    background: linear-gradient(to bottom, #d05030, #f5c78a);
+}
+
+.yellow-black .house-name-oval {
+    background: linear-gradient(to bottom, #e1c55c, #4c4c4c);
+}
+
+.blue-bronze .house-name-oval {
+    background: linear-gradient(to bottom, #6a98c5, #bc9b70);
+}
+
+.green-silver .house-name-oval {
+    background: linear-gradient(to bottom, #4c8c4a, #a6a6a6);
+}
+
+/* Hover effect on house boxes */
+.house-box:hover {
+    background-color: #1a2a3a;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Style for the Back Home button */
+.back {
+    background-color: #1f3a4a; /* Darker version of the main color */
+    color: #a8e6cf; /* Light green to match the mouse color */
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 40px; /* Oval shape */
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    /* Hover and active states */
+    .back:hover {
+        background-color: #a8e6cf;
+        color: #1f3a4a;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+    }
+
+    .back:active {
+        transform: scale(0.95);
+    }

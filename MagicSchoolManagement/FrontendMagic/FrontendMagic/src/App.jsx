@@ -102,7 +102,7 @@ function App() {
     return (
         <>
             <div className="app-container">
-                <p>MAJOOM</p>
+               
                {/* <HouseList />*/}
                 {routes}
 

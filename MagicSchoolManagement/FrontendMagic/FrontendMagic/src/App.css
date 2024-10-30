@@ -56,37 +56,7 @@
     padding: 2rem;
 }
 
-.house-box {
-    width: 250px; /* Increase width */
-    height: 350px; /* Increase height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem; /* Extra padding */
-    color: white;
-    font-family: 'Mountains of Christmas', cursive;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
 
-/* Define each house's specific color scheme */
-.red-gold {
-    background: linear-gradient(to bottom, #d05030, #f5c78a); /* Muted red to gold */
-}
-
-.yellow-black {
-    background: linear-gradient(to bottom, #e1c55c, #4c4c4c); /* Soft yellow to dark gray */
-}
-
-.blue-bronze {
-    background: linear-gradient(to bottom, #6a98c5, #bc9b70); /* Muted blue to bronze */
-}
-
-.green-silver {
-    background: linear-gradient(to bottom, #4c8c4a, #a6a6a6); /* Soft green to light gray */
-}
 
 .header-logo {
     width: 140px;
