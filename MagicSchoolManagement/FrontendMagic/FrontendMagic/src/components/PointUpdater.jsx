@@ -10,9 +10,13 @@ const PointUpdater = ({
 }) => {
     const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
     
-
     const handleSubmitPlus = async () => {
 
+        if (pointsToAddOrTakeaway < 0) {
+            alert("Don't try to cheat with negative numbers!"); 
+            setPointsToAddOrTakeaway("");
+            return;
+        }
         try {
             const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
                 method: "PATCH",
@@ -25,7 +29,9 @@ const PointUpdater = ({
                 throw new Error(`Error: ${response.status}`);
             }
             // Update state or handle success here
-            setCounter((prevCounter) => { return prevCounter + 1});
+            setCounter((prevCounter) => { return prevCounter + 1 });
+            setPointsToAddOrTakeaway("");
+           
         } catch (error) {
             console.error("Error updating points:", error);
         }
@@ -33,6 +39,11 @@ const PointUpdater = ({
 
     const handleSubmitMinus = async () => {
 
+        if (pointsToAddOrTakeaway < 0) {
+            alert("Don't try to cheat with negative numbers!");
+            setPointsToAddOrTakeaway("");
+            return;
+        }
         try {
             const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
                 method: "PATCH",
@@ -46,6 +57,7 @@ const PointUpdater = ({
             }
             // Update state or handle success here
             setCounter((prevCounter) => { return prevCounter + 1 });
+            setPointsToAddOrTakeaway("");
         } catch (error) {
             console.error("Error updating points:", error);
         }
