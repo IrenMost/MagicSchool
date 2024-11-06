@@ -41,8 +41,11 @@ namespace BackendMagic.Services
         public async Task<House> UpdateHouseAddHeadMasterByHouseId(int houseId, int teacherId)
         {
             var house = await _houseRepository.GetHouseById(houseId);
-            var teacher = await _teacherRepository.GetTeacherById(teacherId);
-            if (teacher == null)
+            
+            var newTeacher = await _teacherRepository.GetTeacherById(teacherId);
+            var formerTeacher = await _teacherRepository.GetTeacherById(house.TeacherId);
+
+            if (newTeacher == null)    
             {
                 throw new KeyNotFoundException("no such teacher ");
             }
@@ -51,10 +54,27 @@ namespace BackendMagic.Services
                 throw new KeyNotFoundException("no such house ");
             }
 
-            house.HeadMaster = teacher;
-            teacher.Level = (Model.Enums.Level)1; // to make the teacher's level headmaster
+            if (formerTeacher != null)
+            {
+                formerTeacher.Level = Model.Enums.Level.Teacher; // Downgrade former headmaster 
+                await _teacherRepository.UpdateTeacher(formerTeacher);
+               
+            }
+            
+            if(newTeacher.Level != Model.Enums.Level.Teacher)
+            {
+                throw new Exception("already headmaster or director");
+            }
+            else
+            {
+                house.TeacherId = teacherId;
+                newTeacher.Level = Model.Enums.Level.Headmaster; // upgrade new teacher to headmaster
+            }
+            
+           
             await _houseRepository.UpdateHouse(house);
-            await _teacherRepository.UpdateTeacher(teacher);
+            await _teacherRepository.UpdateTeacher(newTeacher);
+           
             return house;
         }
 

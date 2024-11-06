@@ -2,8 +2,9 @@
 {
     public enum Level
     {
-        Teacher = 0,
-        Headmaster = 1,
-        Director = 2
+        None = 0,
+        Teacher = 1,
+        Headmaster = 2,
+        Director = 3
     }
 }

@@ -10,6 +10,8 @@ namespace BackendMagic.Repository.Interfaces
 
         Task<Teacher> GetTeacherById(int teacherId);
         Task UpdateTeacher(Teacher teacher);
+
+        Task UpdateTeacherById(int teacherId);
       
         Task SaveChangesAsync();
        

@@ -118,15 +118,28 @@ namespace BackendMagic.Controllers
             }
         }
 
-       
+        [HttpPatch("updateHeadmaster/{houseId}")]
+        public async Task<ActionResult<House>> UpdateHeadmaster(int houseId, int teacherId)
+        {
+            try
+            {
+                var house = await _houseService.UpdateHouseAddHeadMasterByHouseId(houseId, teacherId);
 
-        //TODO 1, 2,
+                return Ok(house);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
         // update a house by id (add or change headmaster)
 
         // update a house by id(add student) / remove student
 
-       
+
 
     }
       

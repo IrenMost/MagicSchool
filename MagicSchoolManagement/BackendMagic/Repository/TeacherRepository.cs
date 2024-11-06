@@ -60,5 +60,13 @@ namespace BackendMagic.Repository
             await _dbContext.SaveChangesAsync();
 
         }
+
+        public async Task UpdateTeacherById(int teacherId)
+        {
+            var teacher = await _dbContext.Teachers.FirstOrDefaultAsync(h => h.TeacherId == teacherId);
+            _dbContext.Teachers.Update(teacher);
+            await _dbContext.SaveChangesAsync();
+
+        }
     }
 }
