@@ -9,9 +9,8 @@ namespace BackendMagic.Repository.Interfaces
         Task AddAsync(params Teacher[] teachers);
 
         Task<Teacher> GetTeacherById(int teacherId);
-        Task UpdateCurrentCourse(Course course);
-        Task UpdateAllCourses(Course course);
-
+        Task UpdateTeacher(Teacher teacher);
+      
         Task SaveChangesAsync();
        
       

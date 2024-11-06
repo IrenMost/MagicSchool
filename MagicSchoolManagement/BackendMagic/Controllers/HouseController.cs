@@ -17,14 +17,16 @@ namespace BackendMagic.Controllers
         private readonly ILogger<HouseController> _logger;
         private readonly IConfiguration _configuration;
         private readonly IHouseService _houseService; // Only interact with service
+        private readonly ITeacherService _teacherService;
        
        
 
-        public HouseController(ILogger<HouseController> logger, IConfiguration configuration, IHouseService houseService)
+        public HouseController(ILogger<HouseController> logger, IConfiguration configuration, IHouseService houseService, ITeacherService teacherService)
         {
             _logger = logger;   
             _configuration = configuration;
             _houseService = houseService;
+            _teacherService = teacherService;
            
            
         }
@@ -81,14 +83,20 @@ namespace BackendMagic.Controllers
                 return NotFound("No house found.");
             }
 
-    
+            var headmaster = await _teacherService.GetTeacherById(house.TeacherId);
+            if (headmaster == null)
+            {
+                return NotFound("No headmaster found.");
+            }
+
             var houseDto = new HouseDto
             {
+                
                 
                 HouseId = house.HouseId,
                 HouseName = house.HouseName.ToString(), // Convert enum to string
                 Points = house.Points,
-                TeacherId = house.TeacherId,
+                Headmaster = headmaster.LastName,
                 Students = house.Students,
                 Rooms = house.Rooms
             };
@@ -114,7 +122,7 @@ namespace BackendMagic.Controllers
 
         //TODO 1, 2,
 
-        // update a house by id (add or change headmaster
+        // update a house by id (add or change headmaster)
 
         // update a house by id(add student) / remove student
 

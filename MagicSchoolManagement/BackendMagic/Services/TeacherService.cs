@@ -1,18 +1,66 @@
 ﻿using BackendMagic.Model;
+using BackendMagic.Model.Enums;
+using BackendMagic.Repository;
+using BackendMagic.Repository.Interfaces;
 using BackendMagic.Services.Interfaces;
 
 namespace BackendMagic.Services
 {
     public class TeacherService : ITeacherService
     {
-        public Task<List<Teacher>> GetAllTeachers()
+        private readonly ITeacherRepository _teacherRepository;
+
+        public TeacherService(ITeacherRepository teacherRepository)
         {
-            throw new NotImplementedException();
+            _teacherRepository = teacherRepository;
+        }
+        public async Task<List<Teacher>> GetAllTeachers()
+        {
+            return await _teacherRepository.GetAllTeachers();
         }
 
-        public Task<Teacher> GetTeacherById(int teacherId)
+        public async Task<Teacher> GetTeacherById(int teacherId)
         {
-            throw new NotImplementedException();
+            return await _teacherRepository.GetTeacherById(teacherId);
         }
+
+        public async Task<Teacher> UpdateTeacher(Teacher teacher)
+        {
+            await _teacherRepository.UpdateTeacher(teacher);
+            return teacher;
+        }
+
+        public async Task<Teacher> UpdateCourse(int teacherId, Course course)
+        {
+            var teacher = await _teacherRepository.GetTeacherById(teacherId);
+            if (teacher == null)
+            {
+                throw new KeyNotFoundException("no such teacher ");
+            }
+            teacher.CurrentCourse = course;
+           
+           await _teacherRepository.UpdateTeacher(teacher);
+            return teacher;
+        }
+
+        public async Task<Teacher> UpdateLevelByTeacherId(int teacherId, Level level)
+        {
+            var teacher = await _teacherRepository.GetTeacherById(teacherId);
+            if (teacher == null)
+            {
+                throw new KeyNotFoundException("no such teacher ");
+            }
+
+            teacher.Level = level;
+            await _teacherRepository.UpdateTeacher(teacher);
+            return teacher;
+        }
+
+       
+      
+
+     
+
+
     }
 }

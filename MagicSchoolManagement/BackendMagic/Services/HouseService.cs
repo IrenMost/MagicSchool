@@ -52,7 +52,9 @@ namespace BackendMagic.Services
             }
 
             house.HeadMaster = teacher;
+            teacher.Level = (Model.Enums.Level)1; // to make the teacher's level headmaster
             await _houseRepository.UpdateHouse(house);
+            await _teacherRepository.UpdateTeacher(teacher);
             return house;
         }
 

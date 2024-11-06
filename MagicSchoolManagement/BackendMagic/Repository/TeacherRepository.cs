@@ -53,14 +53,12 @@ namespace BackendMagic.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAllCourses(Course course)
+  
+        public async Task UpdateTeacher(Teacher teacher)
         {
-            throw new NotImplementedException();
-        }
+            _dbContext.Teachers.Update(teacher);
+            await _dbContext.SaveChangesAsync();
 
-        public async Task UpdateCurrentCourse(Course course)
-        {
-            throw new NotImplementedException();
         }
     }
 }
