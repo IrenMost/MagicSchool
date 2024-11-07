@@ -12,13 +12,21 @@ namespace BackendMagic.Data
           
             var houseRepository = serviceProvider.GetService<IHouseRepository>();
             var teacherRepository = serviceProvider.GetService<ITeacherRepository>();
+            var gradeRepository = serviceProvider.GetService<IGradeRepository>();
+            var studentRepository = serviceProvider.GetService<IStudentRepository>();
+
             if (houseRepository == null)
             {
                 throw new InvalidOperationException("IHouseRepository is not registered in the DI container.");
             }
             if (teacherRepository == null)
             {
-                throw new InvalidOperationException("IHouseRepository is not registered in the DI container.");
+                throw new InvalidOperationException("ITeacherRepository is not registered in the DI container.");
+            }
+
+            if (gradeRepository == null) 
+            {
+                throw new InvalidOperationException("IGradeRepository is not registered in the DI container.");
             }
 
 
@@ -55,6 +63,28 @@ namespace BackendMagic.Data
                 await houseRepository.AddAsync(house3);
                 await houseRepository.AddAsync(house4);
               
+            }
+
+            var grades = await gradeRepository.GetGrades();
+            if (grades.Count == 0) 
+            {
+                var grade1 = new Grade(Model.Enums.GradeType.first);
+                var grade2 = new Grade(Model.Enums.GradeType.second);
+                var grade3 = new Grade(Model.Enums.GradeType.third);
+                var grade4 = new Grade(Model.Enums.GradeType.fourth);
+                var grade5 = new Grade(Model.Enums.GradeType.fifth);
+                var grade6 = new Grade(Model.Enums.GradeType.sixth);
+                var grade7 = new Grade(Model.Enums.GradeType.seventh);
+
+                await gradeRepository.AddGradeAsync(grade1);
+                await gradeRepository.AddGradeAsync(grade2);
+                await gradeRepository.AddGradeAsync(grade3);
+                await gradeRepository.AddGradeAsync(grade4);
+                await gradeRepository.AddGradeAsync(grade5);
+                await gradeRepository.AddGradeAsync(grade6);
+                await gradeRepository.AddGradeAsync(grade7);
+
+
             }
 
 

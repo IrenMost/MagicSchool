@@ -8,6 +8,7 @@ namespace BackendMagic.Data
 {
     public class SchoolContext : DbContext
     {
+        public DbSet<Grade> Grade {  get; set; }
         
         public DbSet<House> Houses { get; set; }
         public DbSet<HouseElf> HousesElves { get; set; }

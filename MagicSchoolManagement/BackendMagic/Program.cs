@@ -45,11 +45,13 @@ namespace BackendMagic
                 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
                 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
                 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+                builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 
                 // Register services
                 builder.Services.AddScoped<IHouseService, HouseService>();
                 builder.Services.AddScoped<ITeacherService, TeacherService>();
                 builder.Services.AddScoped<IStudentService, StudentService>();
+                builder.Services.AddScoped<IGradeService, GradeService>();
 
                 // add CORS
 

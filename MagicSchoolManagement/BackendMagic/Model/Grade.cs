@@ -5,8 +5,9 @@ namespace BackendMagic.Model
 {
     public class Grade
     {
+     
         public int GradeId { get; set; }
-        public GradeType GradeType { get; set; }
+        public GradeType GradeType { get; set; } // pl first
         public List<Student> Students { get; set; } = new List<Student>();
 
         public List<Course> ChooseableCourses { get; set; } = new List<Course>();
@@ -16,5 +17,11 @@ namespace BackendMagic.Model
 
         // var teachersForGrade = grade.TeacherGrades.Select(tg => tg.Teacher).ToList();
         // public List<Teacher> Teachers { get; set; } helyett
+
+        public Grade(GradeType gradeType)
+        {
+            GradeType = gradeType;
+        }
+
     }
 }
