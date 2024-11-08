@@ -2,10 +2,12 @@ import './App.css';
 import { useRoutes } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import HouseList from './pages/HouseList';
+import TeacherList from './pages/TeacherList';
+import TeacherUpdater from './pages/updaters/TeacherUpdaterCourse';
 import LayoutHome from './components/LayoutHome';
 import LayoutTeacher from './components/LayoutTeacher';
 import HomePage from "./pages/HomePage";
-
+import LayoutDirector from './components/LayoutDirector';
 function App() {
     const [cursorX, setCursorX] = useState(0);
     const [cursorY, setCursorY] = useState(0);
@@ -82,9 +84,19 @@ function App() {
             path: "/teacher",
             element: <LayoutTeacher />, 
             children: [{ index: true, element: <HouseList /> },
-                { path: "HouseList", element: <HouseList /> }
+                { path: "HouseList", element: <HouseList /> },
+                
             ],
             
+        },
+        {
+            path: "/director",
+            element: <LayoutDirector />,
+            children: [{ index: true, element: <TeacherList /> },
+                { path: "TeacherList", element: <TeacherList /> },
+                { path: "TeacherUpdaterCourse/:teacherId", element: <TeacherUpdater /> }
+            ],
+
         },
     ]);
 

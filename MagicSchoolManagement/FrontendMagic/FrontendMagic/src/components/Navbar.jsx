@@ -8,7 +8,9 @@ export default function Navbar() {
             <Link to={"/teacher/houseList"}>
                 <button>HouseList</button>
             </Link>
-            <button>Register</button>
+            <Link to={"/director/teacherList"}>
+                <button>Teacher`s list</button>
+             </Link>
             <button>Login</button>
             <button>Logout</button>
             <button>More</button>
