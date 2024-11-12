@@ -8,6 +8,10 @@ using BackendMagic.Services.Interfaces;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using BackendMagic.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using BackendMagic.Services.Authentication;
 
 
 
@@ -39,7 +43,22 @@ namespace BackendMagic
                 // db Context 
                 builder.Services.AddDbContext<SchoolContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-                
+
+                builder.Services.AddDbContext<UserContext>(options =>
+                  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+
+                // Add Identity services
+                services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<UserContext>()
+                    .AddDefaultTokenProviders();
+
+                // Register the UserService
+                services.AddScoped<UserService>();
+
+                // JWT Configuration
+                var jwtSettings = configuration.GetSection("Jwt");
+                var issuerSigningKey = configuration["Jwt:IssuerSigningKey"];
 
                 // Register repositories
                 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
@@ -83,6 +102,7 @@ namespace BackendMagic
                 app.UseCors();
                 app.UseHttpsRedirection();
 
+                app.UseAuthentication();
                 app.UseAuthorization();
              
 
