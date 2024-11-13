@@ -3,16 +3,20 @@ using BackendMagic.Model.Enums;
 using BackendMagic.Repository;
 using BackendMagic.Repository.Interfaces;
 using BackendMagic.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace BackendMagic.Services
 {
     public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _teacherRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public TeacherService(ITeacherRepository teacherRepository)
+        public TeacherService(ITeacherRepository teacherRepository, UserManager<IdentityUser> userManager)
         {
             _teacherRepository = teacherRepository;
+            _userManager = userManager;
+
         }
         public async Task<List<Teacher>> GetAllTeachers()
         {

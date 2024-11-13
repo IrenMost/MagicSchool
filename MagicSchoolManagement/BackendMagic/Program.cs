@@ -44,17 +44,17 @@ namespace BackendMagic
                 builder.Services.AddDbContext<SchoolContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-                builder.Services.AddDbContext<UserContext>(options =>
-                  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+               
 
 
                 // Add Identity services
                 services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<UserContext>()
+                    .AddEntityFrameworkStores<SchoolContext>()
                     .AddDefaultTokenProviders();
 
-                // Register the UserService
-                services.AddScoped<UserService>();
+                // Register the UserService and RoleManagementService
+                 
+                services.AddScoped<RoleManagementService>();
 
                 // JWT Configuration
                 var jwtSettings = configuration.GetSection("Jwt");
@@ -107,25 +107,25 @@ namespace BackendMagic
              
 
                 app.MapControllers();
-           
 
 
-                // Seed data
+
+               // Seed data
                 using (var scope = app.Services.CreateScope())
                 {
                     var services = scope.ServiceProvider;
                     var context = services.GetRequiredService<SchoolContext>();
 
                     context.Database.Migrate();
-                
+
                     SeedData.Initialize(services).GetAwaiter().GetResult();
                 }
 
-                //using (var scope = app.Services.CreateScope())
-                //{
-                //    var services = scope.ServiceProvider;
-                //    await SeedData.Initialize(services
-                //}
+                using (var scope = app.Services.CreateScope())
+                {
+                    var roleManagementService = scope.ServiceProvider.GetRequiredService<RoleManagementService>();
+                    await roleManagementService.EnsureRolesAndClaimsAsync();
+                }
 
             }
             

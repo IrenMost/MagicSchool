@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 
 
-const TypeUpdater = () => {
+const TeacherUpdater = () => {
 
     const [loading, setLoading] = useState(false);
     const [updated, setUpdated] = useState(false);
@@ -89,4 +89,4 @@ const TypeUpdater = () => {
     );
 };
 
-export default TypeUpdater;
+export default TeacherUpdater;

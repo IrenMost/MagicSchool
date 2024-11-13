@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using BackendMagic.Model.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace BackendMagic.Model
 {
@@ -15,17 +16,13 @@ namespace BackendMagic.Model
         
         public Course CurrentCourse { get; set; } = Course.None;
 
-        public Teacher( string firstName, string lastName, Gender gender, Level level)
-        {
-       
-            FirstName = firstName;
-            LastName = lastName;
-            Gender = gender;
-            Level = level;
-            
-        }
+        // Foreign key and navigation property for IdentityUser
+        public string IdentityUserId { get; set; } // The foreign key to IdentityUser
+        public IdentityUser IdentityUser { get; set; } // Navigation property
 
-        public Teacher( string firstName, string lastName, Gender gender, Level level, Course currentCourse)
+       
+
+        public Teacher( string firstName, string lastName, Gender gender, Level level, Course currentCourse, string identityUserId)
         {
        
             FirstName = firstName;
@@ -33,6 +30,7 @@ namespace BackendMagic.Model
             Gender = gender;
             Level = level;
             CurrentCourse = currentCourse;
+            IdentityUserId = identityUserId;
 
         }
 
@@ -45,53 +43,6 @@ namespace BackendMagic.Model
         // public List<Grade> Grades { get; set; } helyett
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public void AppointToHeadMaster()
-        {
-            // Check if the teacher is already a headmaster
-            if (this.Level == Level.Headmaster)
-            {
-                // Optionally throw an exception or handle the case here
-                throw new InvalidOperationException("This teacher is already the headmaster.");
-            }
-
-            this.Level = Level.Headmaster;
-
-        }
-
-        public void DownGradeToTeacher()
-        {
-
-
-
-            // Check if the teacher is already a headmaster
-            if (this.Level == Level.Teacher)
-            {
-                // Optionally throw an exception or handle the case here
-                throw new InvalidOperationException("This teacher is not a headmaster.");
-            }
-
-
-            this.Level = Level.Teacher;
-
-        }
 
     }
  }

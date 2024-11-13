@@ -28,7 +28,7 @@ namespace BackendMagic.Services
             return await _gradeRepository.GetGradeById(gradeId);
         }
 
-        public async Task<Grade> AddCourseToAGrade(int gradeId, Course course)
+        public async Task<Grade> AddCourseToAGrade(int gradeId, Course course) // int teacher
         {
 
             var grade = await _gradeRepository.GetGradeById(gradeId);
@@ -39,18 +39,54 @@ namespace BackendMagic.Services
             
         }
 
-        public async Task<Grade> AddStudentToAGrade(int gradeId, int studentId)
+        //nem kell mégegyszer eltárolni, mert lekérhető lesz a studentnél...
+
+        public async Task<Grade> AddStudentTotheFirstGrade( int studentId)
         {
-            var grade = await _gradeRepository.GetGradeById(gradeId);
+            var grade = await _gradeRepository.GetGradeById(1);
             var student = await _studentRepository.GetStudentById(studentId);
 
             grade.Students.Add(student);
-            student.GradeId = gradeId;
+            student.GradeId = 1;
 
             await _studentRepository.UpdateStudent(student);
             await _gradeRepository.UpdateGrade(grade);
 
             return grade;
+        }
+
+        public async Task<Grade> RemoveCourseFromAGrade(int gradeId, Course course)
+        {
+            var grade = await _gradeRepository.GetGradeById(gradeId);
+            grade.ChooseableCourses.Remove(course);
+
+            await _gradeRepository.UpdateGrade(grade);
+            return grade;
+        }
+
+        public async Task LetAStudentStepAGradeForward(int studentId, int currentGradeId)
+        {
+            var student = await _studentRepository.GetStudentById(studentId);
+            var currentGrade = student.Grade;
+            var nextGradeId = currentGradeId +1;
+           
+
+            if (student == null)
+            {   
+                throw new KeyNotFoundException("no such studnet ");
+            }
+
+            if(student.GradeId == 7)
+            {
+                throw new Exception("School is finished by this year");
+            } else
+            {
+                var nextGrade = await _gradeRepository.GetGradeById(nextGradeId);
+                student.GradeId = currentGradeId + 1;
+                currentGrade.Students.Remove(student);
+                nextGrade.Students.Add(student);
+
+            }
         }
     }
 }

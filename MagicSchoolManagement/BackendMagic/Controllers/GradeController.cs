@@ -1,5 +1,6 @@
 ﻿using BackendMagic.DTOs;
 using BackendMagic.Model;
+using BackendMagic.Model.Enums;
 using BackendMagic.Services;
 using BackendMagic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -84,5 +85,38 @@ namespace BackendMagic.Controllers
             };
             return Ok(gradeDto);
         }
+
+
+        [HttpPatch("updateCourseListAdd/{gradeId}")]
+        public async Task<ActionResult<Grade>> UpdateCourseListAdd(int gradeId, [FromBody] Course course) // should be a number, for it is an enum
+        {
+            try
+            {
+                var grade = await _gradeService.AddCourseToAGrade(gradeId, course);
+
+                return Ok(grade);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPatch("updateCourseListRemove/{gradeId}")]
+        public async Task<ActionResult<Grade>> UpdateCourseListRemove(int gradeId, [FromBody] Course course)
+        {
+            try
+            {
+                var grade = await _gradeService.RemoveCourseFromAGrade(gradeId, course);
+
+                return Ok(grade);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        
     }
 }

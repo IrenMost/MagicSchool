@@ -1,4 +1,5 @@
 ﻿using BackendMagic.Model.Enums;
+using Microsoft.AspNetCore.Identity;
 using System.Numerics;
 
 namespace BackendMagic.Model
@@ -7,9 +8,12 @@ namespace BackendMagic.Model
     {
         public int HouseElfId { get; set; }
         public string Name { get; set; }
-        
 
-        
+        public string IdentityUserId { get; set; } 
+        public IdentityUser IdentityUser { get; set; } 
+
+
+
 
 
     }

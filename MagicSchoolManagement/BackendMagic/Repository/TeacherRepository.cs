@@ -45,9 +45,13 @@ namespace BackendMagic.Repository
 
         public async Task<Teacher> GetTeacherById(int teacherId)
         {
-            return await _dbContext.Teachers.FirstOrDefaultAsync(h => h.TeacherId == teacherId);
+            return await _dbContext.Teachers.FirstOrDefaultAsync(t => t.TeacherId == teacherId);
         }
 
+        public async Task<Teacher> GetTeacherByIdentityUserId(string identityUserId)
+        {
+            return await _dbContext.Teachers.FirstOrDefaultAsync(t => t.IdentityUserId == identityUserId);
+        }
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
@@ -63,7 +67,7 @@ namespace BackendMagic.Repository
 
         public async Task UpdateTeacherById(int teacherId)
         {
-            var teacher = await _dbContext.Teachers.FirstOrDefaultAsync(h => h.TeacherId == teacherId);
+            var teacher = await _dbContext.Teachers.FirstOrDefaultAsync(t => t.TeacherId == teacherId);
             _dbContext.Teachers.Update(teacher);
             await _dbContext.SaveChangesAsync();
 

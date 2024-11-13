@@ -26,6 +26,10 @@ namespace BackendMagic.Repository
         {
             return await _dbContext.Students.FirstOrDefaultAsync(s => s.StudentId == studentId);
         }
+        public async Task<Student> GetStudentByIdentityUserId(string identityUserId)
+        {
+            return await _dbContext.Students.FirstOrDefaultAsync(s => s.IdentityUserId == identityUserId);
+        }
 
         public async Task<List<Student>> GetAllStudents()
         {

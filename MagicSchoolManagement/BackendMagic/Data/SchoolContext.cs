@@ -1,12 +1,15 @@
 ﻿using BackendMagic.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Reflection.Emit;
+using System.Security.Permissions;
 
 
 namespace BackendMagic.Data
 {
-    public class SchoolContext : DbContext
+    public class SchoolContext :  IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public DbSet<Grade> Grade {  get; set; }
         
@@ -16,15 +19,17 @@ namespace BackendMagic.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
 
-        public DbSet<School> Schools { get; set; } 
+        public DbSet<School> Schools { get; set; }
 
-        
+
+
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            
+
+            base.OnModelCreating(modelBuilder);
 
             // primary keys model
             modelBuilder.Entity<Grade>().HasKey(h => h.GradeId);
@@ -93,8 +98,35 @@ namespace BackendMagic.Data
 
 
 
+            // Configure the relationship between Teacher and IdentityUser
+            modelBuilder.Entity<Teacher>()
+                .HasOne(t => t.IdentityUser)
+                .WithOne() // No collection in IdentityUser for teachers, so this is left empty
+                .HasForeignKey<Teacher>(t => t.IdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict); // Use Restrict or Cascade based on your needs
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.IdentityUser)
+                .WithOne() 
+                .HasForeignKey<Student>(s => s.IdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
+   
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .HasKey(login => new { login.UserId, login.LoginProvider, login.ProviderKey });
+
+            modelBuilder.Entity<IdentityRole>()
+                .HasKey(role => role.Id);
+
+            modelBuilder.Entity<IdentityUserClaim<string>>()
+                .HasKey(userClaim => userClaim.Id);
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .HasKey(userRole => new { userRole.UserId, userRole.RoleId });
+
+            modelBuilder.Entity<IdentityUserToken<string>>()
+                .HasKey(userToken => new { userToken.UserId, userToken.LoginProvider, userToken.Name });
         }
 
     }

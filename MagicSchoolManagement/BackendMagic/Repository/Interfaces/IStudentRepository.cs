@@ -7,6 +7,8 @@ namespace BackendMagic.Repository.Interfaces
         Task<List<Student>> GetAllStudents();
         Task<Student> GetStudentById(int studentId);
 
+        Task<Student> GetStudentByIdentityUserId(string identityUserId);
+
         Task AddAsync(Student student);
         Task UpdateStudent(Student student);
 

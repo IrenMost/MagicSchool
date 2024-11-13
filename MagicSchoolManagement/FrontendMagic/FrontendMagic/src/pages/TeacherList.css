@@ -1,0 +1,101 @@
+/* Teacher table container */
+.teacher-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9fb;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Table styling */
+    .teacher-container table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Mountains of Christmas', cursive;
+        font-size: 1rem;
+    }
+
+    /* Header styling */
+    .teacher-container th {
+        background-color: #1a2a3a;
+        color: #a8e6cf;
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 2px solid #a8e6cf;
+    }
+
+    /* Table cells */
+    .teacher-container td {
+        padding: 0.75rem;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Row hover effect without highlighting button cells */
+    .teacher-container tbody tr:hover td:not(:last-child) {
+        background-color: #e6f2f1;
+    }
+
+/* Update button styling */
+.update {
+    padding: 0.5rem 1rem;
+    background-color: #1f3a4a; /* Darker color for button */
+    border: 2px solid #a8e6cf;
+    border-radius: 8px;
+    color: #a8e6cf;
+    font-size: 1rem; /* Font size adjusted for consistency */
+    font-family: 'Mountains of Christmas', cursive; /* Consistent font */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+    /* Button hover effect */
+    .update:hover {
+        background-color: #1a2a3a; /* Darker shade for hover */
+        transform: scale(1.05);
+        box-shadow: 0 0 5px #a8e6cf;
+    }
+
+    /* Button active effect */
+    .update:active {
+        transform: scale(0.95);
+    }
+
+/* Back button styling with consistent font */
+.back {
+    display: inline-block;
+    margin: 2rem auto 0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    border: 2px solid #a8e6cf;
+    background-color: #1f3a4a;
+    color: #a8e6cf;
+    font-size: 1rem;
+    font-family: 'Mountains of Christmas', cursive; /* Consistent font */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+    /* Back button hover effect */
+    .back:hover {
+        background-color: #1a2a3a;
+        box-shadow: 0 0 8px #a8e6cf;
+        transform: scale(1.05);
+    }
+
+    .back:active {
+        transform: scale(0.95);
+    }
+
+    /* Back button hover effect */
+    .back:hover {
+        background-color: #1a2a3a;
+        box-shadow: 0 0 8px #a8e6cf;
+        transform: scale(1.05);
+    }
+
+    .back:active {
+        transform: scale(0.95);
+    }

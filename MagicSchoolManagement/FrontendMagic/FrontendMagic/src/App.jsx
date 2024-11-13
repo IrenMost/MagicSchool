@@ -94,7 +94,7 @@ function App() {
             element: <LayoutDirector />,
             children: [{ index: true, element: <TeacherList /> },
                 { path: "TeacherList", element: <TeacherList /> },
-                { path: "TeacherUpdaterCourse/:teacherId", element: <TeacherUpdater /> }
+                { path: "TeacherUpdater/:teacherId", element: <TeacherUpdater /> }
             ],
 
         },

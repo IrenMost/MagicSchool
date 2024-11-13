@@ -2,6 +2,8 @@
 using BackendMagic.Repository;
 using BackendMagic.Repository.Interfaces;
 using BackendMagic.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace BackendMagic.Services
 {
@@ -13,13 +15,15 @@ namespace BackendMagic.Services
         private readonly IHouseRepository _houseRepository;
         private readonly ITeacherRepository _teacherRepository;
         private readonly IStudentRepository _studentRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
 
-        public HouseService(IHouseRepository houseRepository, ITeacherRepository teacherRepository, IStudentRepository studentRepository)
+        public HouseService(IHouseRepository houseRepository, ITeacherRepository teacherRepository, IStudentRepository studentRepository, UserManager<IdentityUser> userManager)
         {
             _houseRepository = houseRepository;
             _teacherRepository = teacherRepository;
             _studentRepository = studentRepository;
+            _userManager = userManager;
         }
 
         public async Task<List<House>> GetAllHouses()
@@ -45,6 +49,25 @@ namespace BackendMagic.Services
             var newTeacher = await _teacherRepository.GetTeacherById(teacherId);
             var formerTeacher = await _teacherRepository.GetTeacherById(house.TeacherId);
 
+            var newTeacherUser = await _userManager.FindByIdAsync(newTeacher.IdentityUserId);
+            var formerTeacherUser = await _userManager.FindByIdAsync(formerTeacher.IdentityUserId);
+
+            // Check if the user already has the "Headmaster" claim
+            var claimsNew = await _userManager.GetClaimsAsync(newTeacherUser);
+            var claimsFormer = await _userManager.GetClaimsAsync(formerTeacherUser);
+            var headmasterClaimNew = claimsNew.FirstOrDefault(c => c.Type == "Position" && c.Value == "Headmaster");
+            var headmasterClaimFormer = claimsNew.FirstOrDefault(c => c.Type == "Position" && c.Value == "Headmaster");
+            
+
+            if (newTeacherUser == null)
+            {
+                throw new KeyNotFoundException("No user found for the new teacher");
+            }
+            if (formerTeacherUser == null)
+            {
+                throw new KeyNotFoundException("No user found for the former teacher");
+            }
+
             if (newTeacher == null)    
             {
                 throw new KeyNotFoundException("no such teacher ");
@@ -58,17 +81,28 @@ namespace BackendMagic.Services
             {
                 formerTeacher.Level = Model.Enums.Level.Teacher; // Downgrade former headmaster 
                 await _teacherRepository.UpdateTeacher(formerTeacher);
-               
+
+                if (headmasterClaimFormer != null)
+                {
+                    await _userManager.RemoveClaimAsync(formerTeacherUser, headmasterClaimFormer);
+                }
+
             }
+
             
-            if(newTeacher.Level != Model.Enums.Level.Teacher)
+            if (newTeacher.Level != Model.Enums.Level.Teacher)
             {
                 throw new Exception("already headmaster or director");
             }
             else
             {
                 house.TeacherId = teacherId;
-                newTeacher.Level = Model.Enums.Level.Headmaster; // upgrade new teacher to headmaster
+                newTeacher.Level = Model.Enums.Level.Headmaster; // upgrade new teacher to headmaster 
+
+                if (headmasterClaimNew == null)
+                {
+                    await _userManager.AddClaimAsync(newTeacherUser, new Claim("Position", "Headmaster")); // add new claim to identityuser
+                }
             }
             
            

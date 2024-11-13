@@ -8,12 +8,12 @@ namespace BackendMagic.Services.Interfaces
         Task<List<Student>> GetAllStudents();
         Task<Student> GetStudentById(int studentId);
         Task<Student> UpdateStudent(Student student);
-        Task<Student> UpdatePet(int studentId, Pet pet);
-        Task<Student> UpdateHouse(int studentId, int houseid);
-        Task<Student> UpdateCourses(int studnetId, Course course, bool IsAdd);
+        Task<Student> GivePetToStudentById(int studentId, Pet pet);
+        Task<Student> RankAStudentByIdIntoAHouse(int studentId, int houseid);
+        Task<Student> AddCourseToAStudent(int studnetId, Course course, bool IsAdd);
 
-        Task<Student> UpdateRoom(int studentId, int roomId);
+        Task<Student> UpdateStudentWithRoom(int studentId, int roomId);
 
-        Task<Student> UpdateGrade(int studentId, Grade grade);
+        Task<Student> UpdateStudentIntoAGrade(int studentId, Grade grade);
     }
 }

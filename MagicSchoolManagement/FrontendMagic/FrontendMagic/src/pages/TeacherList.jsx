@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import './TeacherList.css';
+import './TeacherList.css';
 
 
 
@@ -30,13 +30,13 @@ const HouseList = () => {
     const [loading, setLoading] = useState(true);
     const [teacherList, setTeacherList] = useState(null);
    
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     
-    //const onUpdateCourse = async (teacherId) => {
-    //    console.log("update clicked");
-    //    navigate(`/teacherUpdaterCourse/${teacherId}`);
-    //}
+    const onUpdate = async (teacherId) => {
+        console.log("update clicked");
+        navigate(`/director/TeacherUpdater/${teacherId}`);
+    }
 
     //const onUpdateLevel = async (teacherId) => {
     //    console.log("update clicked");
@@ -83,9 +83,9 @@ const HouseList = () => {
 
                             <td>
                                
-                                {/*<button type="button" onClick={() => onUpdateCourse(teacher.typeId)}>*/}
-                                {/*    Update course*/}
-                                {/*</button>*/}
+                                <button className="update" type="button" onClick={() => onUpdate(teacher.typeId)}>
+                                    Update 
+                                </button>
                                 {/*<button type="button" onClick={() => onUpdateLevel(teacher.typeId)}>*/}
                                 {/*    Update level*/}
                                 {/*</button>*/}
