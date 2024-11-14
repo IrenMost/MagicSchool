@@ -14,6 +14,6 @@ namespace BackendMagic.Services.Interfaces
 
         Task<Student> UpdateStudentWithRoom(int studentId, int roomId);
 
-        Task<Student> UpdateStudentIntoAGrade(int studentId, Grade grade);
+        Task<Student> UpdateStudentIntoAGrade(int studentId, int gradeId);
     }
 }

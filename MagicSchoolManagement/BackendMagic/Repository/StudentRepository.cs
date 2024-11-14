@@ -9,12 +9,12 @@ namespace BackendMagic.Repository
     public class StudentRepository : IStudentRepository
     {
         private readonly SchoolContext _dbContext;
-        private readonly IStudentService _studentService;
+        
 
-        public StudentRepository(SchoolContext dbContext, IStudentService studentService)
+        public StudentRepository(SchoolContext dbContext)
         {
             _dbContext = dbContext;
-            _studentService = studentService;
+           
         }
 
         public async Task AddAsync(Student student)

@@ -103,7 +103,7 @@ namespace BackendMagic.Controllers
             return Ok(houseDto);
         }
 
-        [HttpPatch("updatePoints/{houseId}")]
+        [HttpPatch("updatePoints/{houseId}")  ]
         public async Task<ActionResult<House>> UpdatePoints(int houseId, [FromBody] UpdateHousePointsReq updateHousePointsReq)
         {
             try

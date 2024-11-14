@@ -9,44 +9,62 @@ namespace BackendMagic.Services
     {
         private readonly IHouseRepository _houseRepository;
         private readonly IStudentRepository _studentRepository;
+        private readonly IGradeRepository _gradeRepository;
+        private readonly IRoomRepository _roomRepository;
         public Task<Student> AddCourseToAStudent(int studnetId, Course course, bool IsAdd)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Student>> GetAllStudents()
+        public async Task<List<Student>> GetAllStudents()
         {
-            throw new NotImplementedException();
+            return await _studentRepository.GetAllStudents();
         }
 
-        public Task<Student> GetStudentById(int studentId)
+        public async Task<Student> GetStudentById(int studentId)
         {
-            throw new NotImplementedException();
+            return await _studentRepository.GetStudentById(studentId);
         }
 
-        public Task<Student> GivePetToStudentById(int studentId, Pet pet)
+        public async Task<Student> GivePetToStudentById(int studentId, Pet pet)
         {
-            throw new NotImplementedException();
+            var student = await _studentRepository.GetStudentById(studentId);
+            student.Pet = pet;
+            await _studentRepository.UpdateStudent(student);
+            return student;
         }
 
-        public Task<Student> RankAStudentByIdIntoAHouse(int studentId, int houseid)
+        public async Task<Student> RankAStudentByIdIntoAHouse(int studentId, int houseid)
         {
-            throw new NotImplementedException();
+            var student = await _studentRepository.GetStudentById(studentId);
+            var house = await _houseRepository.GetHouseById(houseid);
+            student.House = house;
+            await _studentRepository.UpdateStudent(student);
+            return student;
         }
 
-        public Task<Student> UpdateStudent(Student student)
+        public async Task<Student> UpdateStudent(Student student)
         {
-            throw new NotImplementedException();
+            await _studentRepository.UpdateStudent(student);
+            return student;
         }
 
-        public Task<Student> UpdateStudentIntoAGrade(int studentId, Grade grade)
+        public async Task<Student> UpdateStudentIntoAGrade(int studentId, int gradeId)
         {
-            throw new NotImplementedException();
+            var student = await _studentRepository.GetStudentById(studentId);
+            var grade = await _gradeRepository.GetGradeById(gradeId);
+            student.Grade = grade;
+            await _studentRepository.UpdateStudent(student);
+            return student;
         }
 
-        public Task<Student> UpdateStudentWithRoom(int studentId, int roomId)
+        public async Task<Student> UpdateStudentWithRoom(int studentId, int roomId)
         {
-            throw new NotImplementedException();
+            var student = await _studentRepository.GetStudentById(studentId);
+            var room = await _roomRepository.GetRoomById(roomId);
+            student.Room = room;
+            await _studentRepository.UpdateStudent(student);
+            return student;
         }
     }
 }

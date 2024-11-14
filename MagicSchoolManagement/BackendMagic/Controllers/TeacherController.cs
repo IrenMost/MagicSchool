@@ -106,21 +106,7 @@ namespace BackendMagic.Controllers
             }
         }
 
-        [HttpPatch("updateTeacherLevel/{teacherId}")]
-        public async Task<ActionResult<House>> UpdateLevel(int teacherId, Level level)
-        {
-            try
-            {
-                var teacher = await _teacherService.UpdateLevelByTeacherId(teacherId, level);
-
-                return Ok(teacher);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
+        
     }
 
 

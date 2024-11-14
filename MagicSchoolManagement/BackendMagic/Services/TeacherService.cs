@@ -47,24 +47,62 @@ namespace BackendMagic.Services
             return teacher;
         }
 
-        public async Task<Teacher> UpdateLevelByTeacherId(int teacherId, Level level)
+       
+
+        public  async Task<Teacher> GetTeacherByIdentityUserId(string identityUserId)
         {
-            var teacher = await _teacherRepository.GetTeacherById(teacherId);
-            if (teacher == null)
+            return await _teacherRepository.GetTeacherByIdentityUserId(identityUserId);
+        }
+
+        public async Task<Teacher> UpdateByAddingRoleToATeacherByIdentityUserId(string identitiyUserId, string role)
+        {
+            var teacherUser = await _userManager.FindByIdAsync(identitiyUserId);
+            if (teacherUser == null)
             {
-                throw new KeyNotFoundException("no such teacher ");
+                throw new KeyNotFoundException("User not found.");
             }
 
-            teacher.Level = level;
-            await _teacherRepository.UpdateTeacher(teacher);
+
+            // user is already in that role?
+
+            bool hasRole = await _userManager.IsInRoleAsync(teacherUser, role);
+            if (!hasRole)
+            {
+                var result = await _userManager.AddToRoleAsync(teacherUser, role);
+                if (!result.Succeeded)
+                {
+                    throw new Exception($"Failed to add role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                }
+            }
+
+            var teacher = await _teacherRepository.GetTeacherByIdentityUserId(identitiyUserId);
             return teacher;
         }
 
-       
-      
+        public async Task<Teacher> RemoveRoleFromATeacherByIdentityUserId(string identitiyUserId, string role)
+        {
+           
+            var teacherUser = await _userManager.FindByIdAsync(identitiyUserId);
+            if (teacherUser == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
 
-     
+         
+            bool hasRole = await _userManager.IsInRoleAsync(teacherUser, role);
+            if (hasRole)
+            {
+            
+                var result = await _userManager.RemoveFromRoleAsync(teacherUser, role);
+                if (!result.Succeeded)
+                {
+                    throw new Exception($"Failed to remove role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                }
+            }
 
-
+          
+            var teacher = await _teacherRepository.GetTeacherByIdentityUserId(identitiyUserId);
+            return teacher;
+        }
     }
 }
