@@ -17,6 +17,7 @@ namespace BackendMagic.Services
         private readonly IStudentRepository _studentRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ITeacherService _teacherService;
+        
 
 
         public HouseService(IHouseRepository houseRepository, ITeacherRepository teacherRepository, IStudentRepository studentRepository, UserManager<IdentityUser> userManager, ITeacherService teacherService)
@@ -26,6 +27,7 @@ namespace BackendMagic.Services
             _studentRepository = studentRepository;
             _userManager = userManager;
             _teacherService = teacherService;
+            
         }
 
         public async Task<List<House>> GetAllHouses()
@@ -78,6 +80,8 @@ namespace BackendMagic.Services
                 // Downgrade former headmaster 
 
                 await _teacherService.RemoveRoleFromATeacherByIdentityUserId(formerTeacher.IdentityUserId, "Headmaster");
+                formerTeacher.Level = Model.Enums.Level.Teacher;
+                await _teacherRepository.UpdateTeacher(formerTeacher);
                 
 
             }
@@ -87,6 +91,8 @@ namespace BackendMagic.Services
             {
                 await _teacherService.UpdateByAddingRoleToATeacherByIdentityUserId(newTeacher.IdentityUserId, "Headmaster");
                 house.HeadMaster = newTeacher;
+                newTeacher.Level = Model.Enums.Level.Headmaster;
+                await _teacherRepository.UpdateTeacher(newTeacher);
 
             }
 

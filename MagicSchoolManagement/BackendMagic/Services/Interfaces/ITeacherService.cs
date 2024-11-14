@@ -14,5 +14,6 @@ namespace BackendMagic.Services.Interfaces
         Task<Teacher> UpdateByAddingRoleToATeacherByIdentityUserId(string identitiyUserId, string role);
 
         Task<Teacher> RemoveRoleFromATeacherByIdentityUserId(string identitiyUserId, string role);
+
     }
 }

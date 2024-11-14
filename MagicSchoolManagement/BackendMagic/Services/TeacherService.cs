@@ -11,11 +11,13 @@ namespace BackendMagic.Services
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly UserManager<IdentityUser> _userManager;
+        
 
-        public TeacherService(ITeacherRepository teacherRepository, UserManager<IdentityUser> userManager)
+        public TeacherService(ITeacherRepository teacherRepository, UserManager<IdentityUser> userManager )
         {
             _teacherRepository = teacherRepository;
             _userManager = userManager;
+            
 
         }
         public async Task<List<Teacher>> GetAllTeachers()
@@ -76,6 +78,9 @@ namespace BackendMagic.Services
             }
 
             var teacher = await _teacherRepository.GetTeacherByIdentityUserId(identitiyUserId);
+            
+
+            teacher.Level = GetLevelFromString(role);
             return teacher;
         }
 
@@ -102,7 +107,25 @@ namespace BackendMagic.Services
 
           
             var teacher = await _teacherRepository.GetTeacherByIdentityUserId(identitiyUserId);
+            teacher.Level = Level.Teacher;
+            await _teacherRepository.UpdateTeacher(teacher);
+
+
+
             return teacher;
+        }
+
+        public Level GetLevelFromString(string role)
+        {
+            if (Enum.TryParse(role, true, out Level level))
+            {
+                return level;
+            }
+            else
+            {
+                // Optionally handle invalid role by throwing an exception or returning a default value (e.g., Level.None).
+                throw new ArgumentException($"Invalid role: {role}");
+            }
         }
     }
 }
