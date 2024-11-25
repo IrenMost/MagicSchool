@@ -46,6 +46,9 @@ namespace BackendMagic.Data
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(user, role);
+
+                        user.EmailConfirmed = true;
+                        await userManager.UpdateAsync(user);
                         if (level == Model.Enums.Level.Headmaster)
                         {
                             await userManager.AddToRoleAsync(user, "Headmaster");
@@ -86,6 +89,10 @@ namespace BackendMagic.Data
                 {
                     user = new IdentityUser { UserName = userName, Email = email };
                     var result = await userManager.CreateAsync(user, password);
+
+                    user.EmailConfirmed = true;
+                    await userManager.UpdateAsync(user);
+
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(user, role);
