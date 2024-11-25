@@ -17,6 +17,8 @@ namespace BackendMagic.DTOs.Auth
         [Required]
         public string Name { get; set; } // "dobby"
 
+        public string Role { get; } = "HouseElf";
+
 
     }
 }

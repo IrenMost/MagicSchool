@@ -27,8 +27,10 @@ namespace BackendMagic.DTOs.Auth
         public Gender Gender { get; set; }
 
         public Pet Pet { get; set; }
-        public  GradeType GradeType{ get; set; }
+        public  int GradeId{ get; set; }
 
-        public HouseName HouseName { get; set; }
+        public int HouseId { get; set; }
+
+        public string Role { get; } = "Student";
     }
 }

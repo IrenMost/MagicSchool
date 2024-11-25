@@ -6,7 +6,7 @@ namespace BackendMagic.Services.Authentication
 {
     public class RoleManagementService
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager; 
         private readonly UserManager<IdentityUser> _userManager;
         
         public RoleManagementService(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
