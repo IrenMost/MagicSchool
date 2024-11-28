@@ -10,6 +10,7 @@ const PointUpdater = ({
 }) => {
     const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
     
+    
     const handleSubmitPlus = async () => {
 
         if (pointsToAddOrTakeaway < 0) {
@@ -20,6 +21,7 @@ const PointUpdater = ({
         try {
             const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
                 method: "PATCH",
+               // credentials: 'include', // to make the server read the jwt cookie
                 headers: {
                     "Content-Type": "application/json",
                 },

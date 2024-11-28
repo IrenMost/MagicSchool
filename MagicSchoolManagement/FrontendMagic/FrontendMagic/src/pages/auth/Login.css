@@ -1,0 +1,118 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a2a3a; /* Dark background to match the general theme */
+    height: 100vh;
+    color: #a8e6cf; /* Text color */
+    font-family: 'Mountains of Christmas', cursive;
+    padding: 2rem;
+}
+
+/* Title styling for login page */
+.login-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #a8e6cf; /* Light text for the title */
+}
+
+/* Form styling */
+.login-form {
+    background-color: #1f3a4a; /* Dark box for form background */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+    max-width: 400px; /* Set a max-width for form */
+}
+
+/* Input fields container */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Input field styling */
+.form-input {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #2b4a58; /* Dark background for inputs */
+    color: #a8e6cf; /* Text color */
+    font-size: 1rem;
+    font-family: 'Arial, sans-serif;'
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+    /* Input focus effect */
+    .form-input:focus {
+        background-color: #3a5c72; /* Slightly lighter background on focus */
+        box-shadow: 0 0 5px #a8e6cf; /* Light glow effect */
+    }
+
+/* Submit button styling */
+.submit-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #1f3a4a; /* Dark background to match the theme */
+    border: 2px solid #a8e6cf; /* Border color matching other buttons */
+    border-radius: 25px;
+    color: #a8e6cf; /* Text color matching other buttons */
+    font-size: 1.2rem;
+    font-family: 'Mountains of Christmas', cursive;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    /* Submit button hover effect */
+    .submit-button:hover {
+        background-color: #1a2a3a; /* Darker shade on hover */
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+        transform: scale(1.05);
+    }
+
+    /* Submit button active effect */
+    .submit-button:active {
+        transform: scale(0.95);
+    }
+
+/* Message display (success or error) */
+.message {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #e76f51; /* Use a red/orange color for error or success message */
+    text-align: center;
+}
+
+/* Back button styling (reuse same styling as teacher table or other buttons) */
+.back {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    border: 2px solid #a8e6cf;
+    background-color: #1f3a4a;
+    color: #a8e6cf;
+    font-size: 1rem;
+    font-family: 'Mountains of Christmas', cursive; /* Consistent font */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+    /* Back button hover effect */
+    .back:hover {
+        background-color: #1a2a3a;
+        box-shadow: 0 0 8px #a8e6cf;
+        transform: scale(1.05);
+    }
+
+    /* Back button active effect */
+    .back:active {
+        transform: scale(0.95);
+    }
