@@ -17,7 +17,7 @@ namespace BackendMagic.Repository
         public async Task AddRoomAsync(Room room)
         {
            await _dbContext.Rooms.AddAsync(room);
-            await SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
         }
 
