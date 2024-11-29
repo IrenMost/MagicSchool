@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 namespace BackendMagic.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IStudentService _studentService;
@@ -128,7 +128,7 @@ namespace BackendMagic.Controllers
                 var cookieOptions = new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true,
+                    Secure = false, // For local development only; set to true in production
                     SameSite = SameSiteMode.None,
                     Expires = DateTime.UtcNow.AddMinutes(30)
                 };
