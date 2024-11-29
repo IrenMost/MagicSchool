@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
 using BackendMagic.DTOs;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackendMagic.Controllers 
 // Handles HTTP requests and responses, delegating all business logic to the service layer.
@@ -30,7 +31,7 @@ namespace BackendMagic.Controllers
            
            
         }
-
+        [AllowAnonymous]
         [HttpGet("all")]
         public async Task<ActionResult<List<House>>> GetAllFourHouses()
         {
@@ -103,11 +104,12 @@ namespace BackendMagic.Controllers
             return Ok(houseDto);
         }
 
-        [HttpPatch("updatePoints/{houseId}")  ]
+        [HttpPatch("updatePoints/{houseId}"),  Authorize(Roles = ("Teacher, Headmaster, Director, Ministry"))]
         public async Task<ActionResult<House>> UpdatePoints(int houseId, [FromBody] UpdateHousePointsReq updateHousePointsReq)
         {
             try
             {
+                
                 var house = await _houseService.UpdatePoints(houseId, updateHousePointsReq.Points, updateHousePointsReq.IsAdd);
 
                 return Ok(house);

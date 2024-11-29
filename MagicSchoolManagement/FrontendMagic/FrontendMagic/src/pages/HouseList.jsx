@@ -11,7 +11,9 @@ async function fetchAllHouseData() {
     try {
         const response = await fetch(`https://localhost:7135/House/all`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" }
+            
+            headers: { "Content-Type": "application/json" },
+            
         });
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);

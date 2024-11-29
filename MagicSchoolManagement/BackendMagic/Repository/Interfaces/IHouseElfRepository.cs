@@ -8,7 +8,6 @@ namespace BackendMagic.Repository.Interfaces
         Task<HouseElf> GetHouseElfById(int houseElfId);
 
         Task<HouseElf> GetHouseElfByIdentityUserId(string identityUserId);
-
         Task AddAsync(HouseElf houseElft);
         Task UpdateHouseElf(HouseElf houseElf);
 

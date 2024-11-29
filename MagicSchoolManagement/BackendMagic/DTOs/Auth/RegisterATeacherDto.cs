@@ -28,11 +28,13 @@ namespace BackendMagic.DTOs.Auth
         [Required]
         public Gender Gender { get; set; }
 
-        public Level Level { get; set; }
+        public Level Level { get; set; } = Level.Teacher;
 
         public Course Course { get; set; }
 
-        
+        public string Role { get; set;  } = "Teacher";
+
+
 
     }
 }

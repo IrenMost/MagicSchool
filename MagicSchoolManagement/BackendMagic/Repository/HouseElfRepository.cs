@@ -21,6 +21,7 @@ namespace BackendMagic.Repository
         public async Task AddAsync(HouseElf houseElft)
         {
             await _dbContext.AddAsync(houseElft);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<List<HouseElf>> GetAllHouseElves()

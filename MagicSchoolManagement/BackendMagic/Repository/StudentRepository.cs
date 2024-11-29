@@ -20,6 +20,7 @@ namespace BackendMagic.Repository
         public async Task AddAsync(Student student)
         {
             await _dbContext.AddAsync(student);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<Student> GetStudentById(int studentId)

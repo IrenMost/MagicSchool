@@ -8,8 +8,14 @@ const PointUpdater = ({
    
     setCounter 
 }) => {
-    const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState(null);
+    const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState("");
     
+    const token = document.cookie // assuming the token is stored as a cookie
+        .split('; ')
+        .find(row => row.startsWith('Authorization='))
+        ?.split('=')[1];
+
+
     const handleSubmitPlus = async () => {
 
         if (pointsToAddOrTakeaway < 0) {
@@ -20,8 +26,10 @@ const PointUpdater = ({
         try {
             const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
                 method: "PATCH",
+                credentials: 'include', // to make the server read the jwt cookie
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`, // Pass the token here
                 },
                 body: JSON.stringify({ houseId: houseId, points: parseInt(pointsToAddOrTakeaway), isAdd: true }),
             });
