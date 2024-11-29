@@ -1,10 +1,16 @@
-﻿using BackendMagic.Model;
+﻿using BackendMagic.DTOs.Auth;
+using BackendMagic.Model;
+using BackendMagic.Model.Enums;
+using BackendMagic.Repository;
 using BackendMagic.Repository.Interfaces;
 using BackendMagic.Services.Authentication;
 using BackendMagic.Services.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Drawing;
+using System.Reflection;
 
 namespace BackendMagic.Data
 {
@@ -15,6 +21,8 @@ namespace BackendMagic.Data
 
 
             var houseRepository = serviceProvider.GetService<IHouseRepository>();
+            var houseElfRepository = serviceProvider.GetService<IHouseElfRepository>();
+            var roomRepository = serviceProvider.GetService<IRoomRepository>();
             var teacherRepository = serviceProvider.GetService<ITeacherRepository>();
             var gradeRepository = serviceProvider.GetService<IGradeRepository>();
             var studentRepository = serviceProvider.GetService<IStudentRepository>();
@@ -22,8 +30,11 @@ namespace BackendMagic.Data
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var roleManagementService = serviceProvider.GetRequiredService<RoleManagementService>();
 
+
             // roles
             await roleManagementService.EnsureRolesAndClaimsAsync();
+
+          
 
             // help seed teachers
             async Task EnsureTeacherAsync(UserManager<IdentityUser> userManager, ITeacherRepository teacherRepository,
@@ -233,12 +244,10 @@ namespace BackendMagic.Data
             }
 
 
-            
 
 
 
-
-            var grades = await gradeRepository.GetGrades();
+                var grades = await gradeRepository.GetGrades();
             if (grades.Count == 0)
             {
                 var grade1 = new Grade(Model.Enums.GradeType.first);

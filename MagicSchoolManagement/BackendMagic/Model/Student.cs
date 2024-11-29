@@ -13,8 +13,7 @@ namespace BackendMagic.Model
         public string LastName { get; set; }
         public Gender Gender { get; set; }
         public Pet Pet { get; set; }
-       
-       
+
 
         public List<Course> MyCourses { get; set; } = new List<Course>();
        
@@ -26,7 +25,7 @@ namespace BackendMagic.Model
         public int RoomId { get; set; }
         public virtual Room Room { get; set; }
 
-
+      
         public int GradeId { get; set; }    
         public virtual Grade Grade { get; set; }
 
@@ -65,6 +64,8 @@ namespace BackendMagic.Model
             GradeId = gradeId;
             IdentityUserId = identityUserId;
         }
+
+        public Student() { }
 
 
     }

@@ -2,6 +2,7 @@
 using BackendMagic.Model.Enums;
 using BackendMagic.Repository.Interfaces;
 using BackendMagic.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace BackendMagic.Services
 {
@@ -11,6 +12,7 @@ namespace BackendMagic.Services
         private readonly IStudentRepository _studentRepository;
         private readonly IGradeRepository _gradeRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly UserManager<IdentityUser> _userManager;
         public Task<Student> AddCourseToAStudent(int studnetId, Course course, bool IsAdd)
         {
             throw new NotImplementedException();

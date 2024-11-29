@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using BackendMagic.Services.Authentication;
+using System.Text;
+using BackendMagic.Services.Authentication.Token;
 
 
 
@@ -55,30 +57,56 @@ namespace BackendMagic
                 // Register the UserService and RoleManagementService
                  
                 services.AddScoped<RoleManagementService>();
+                
+                services.AddScoped<TokenExtractor>();
 
                 // JWT Configuration
                 var jwtSettings = configuration.GetSection("Jwt");
                 var issuerSigningKey = configuration["Jwt:IssuerSigningKey"];
+
+                builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                                .AddJwtBearer(options =>
+                                {
+                                    options.TokenValidationParameters = new TokenValidationParameters
+                                    {
+                                        ValidateIssuer = true,
+                                        ValidateAudience = true,
+                                        ValidateLifetime = true,
+                                        ValidateIssuerSigningKey = true,
+                                        ValidIssuer = jwtSettings["ValidIssuer"],
+                                        ValidAudience = jwtSettings["ValidAudience"],
+                                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey))
+                                    };
+                                });
 
                 // Register repositories
                 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
                 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
                 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
                 builder.Services.AddScoped<IGradeRepository, GradeRepository>();
+                builder.Services.AddScoped<IHouseElfRepository, HouseElfRepository>();
+                builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+                builder.Services.AddScoped<ISchoolRepository, SchoolRepository>();
 
                 // Register services
                 builder.Services.AddScoped<IHouseService, HouseService>();
                 builder.Services.AddScoped<ITeacherService, TeacherService>();
                 builder.Services.AddScoped<IStudentService, StudentService>();
+                builder.Services.AddScoped<IHouseElfService, HouseElfService>();
+                builder.Services.AddScoped<IRoomService, RoomService>();
                 builder.Services.AddScoped<IGradeService, GradeService>();
 
+
+                services.AddScoped<IAuthService, AuthService>();
+                services.AddScoped<ITokenManager, TokenManager>();
                 // add CORS
 
                 builder.Services.AddCors(options =>
                 {
-                    options.AddDefaultPolicy(builder =>
+                    options.AddPolicy("AllowSpecificOrigins", builder =>
                     {
-                        builder.WithOrigins("http://localhost:5173")
+                   
+                        builder.WithOrigins("http://localhost:5173")    // "http://localhost:5174", "https://localhost:7135/swagger/index.html" ?
                                 .AllowAnyMethod()                      // Allow GET, POST, PUT, DELETE, etc.
                                 .AllowAnyHeader()                      // Allow custom headers
                                 .AllowCredentials();                   // Allow cookies or other credentials if needed
@@ -99,8 +127,8 @@ namespace BackendMagic
                     app.UseSwaggerUI();
                 }
 
-                app.UseCors();
-                app.UseHttpsRedirection();
+                app.UseCors("AllowSpecificOrigins");
+                //app.UseHttpsRedirection();
 
                 app.UseAuthentication();
                 app.UseAuthorization();
