@@ -9,7 +9,7 @@ import './TeacherList.css';
 
 async function fetchAllTeacherData() {
     try {
-        const response = await fetch(`https://localhost:7135/Teacher/all`, {
+        const response = await fetch(`/api/Teacher/all`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
         });

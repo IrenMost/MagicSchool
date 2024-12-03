@@ -9,7 +9,7 @@ import './HouseList.css';
 
 async function fetchAllHouseData() {
     try {
-        const response = await fetch(`https://localhost:7135/House/all`, {
+        const response = await fetch(`/api/House/all`, {
             method: "GET",
             
             headers: { "Content-Type": "application/json" },
@@ -41,6 +41,7 @@ const HouseList = () => {
         fetchAllHouseData().then((data) => {
             setHouseList(data);
             console.log(data);
+            console.log(document.cookie);
             setLoading(false);
         });
     }, [counter]);
