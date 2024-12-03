@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BackendMagic.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     public class GradeController : ControllerBase
     {
         private readonly ILogger<GradeController> _logger;

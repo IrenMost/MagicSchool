@@ -12,7 +12,7 @@ namespace BackendMagic.Controllers
 // Handles HTTP requests and responses, delegating all business logic to the service layer.
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     public class HouseController : ControllerBase
     {
         private readonly ILogger<HouseController> _logger;
