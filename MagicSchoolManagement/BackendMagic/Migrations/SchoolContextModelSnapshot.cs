@@ -110,6 +110,9 @@ namespace BackendMagic.Migrations
                     b.Property<int>("HouseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MaxCapacity")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SchoolId")
                         .HasColumnType("int");
 

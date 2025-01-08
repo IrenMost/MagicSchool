@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BackendMagic.Migrations
 {
     /// <inheritdoc />
-    public partial class PendingInit : Migration
+    public partial class somePending : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -295,6 +295,7 @@ namespace BackendMagic.Migrations
                 {
                     RoomId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MaxCapacity = table.Column<int>(type: "int", nullable: false),
                     HouseId = table.Column<int>(type: "int", nullable: false),
                     SchoolId = table.Column<int>(type: "int", nullable: true)
                 },

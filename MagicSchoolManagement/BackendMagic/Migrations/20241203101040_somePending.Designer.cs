@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendMagic.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20241113153036_PendingInit")]
-    partial class PendingInit
+    [Migration("20241203101040_somePending")]
+    partial class somePending
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,9 @@ namespace BackendMagic.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
                     b.Property<int>("HouseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxCapacity")
                         .HasColumnType("int");
 
                     b.Property<int?>("SchoolId")
