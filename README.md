@@ -9,3 +9,4 @@ Frontend RUN:
 	 npm -v 10.9.0
 	
 
+npm install js-cookie
