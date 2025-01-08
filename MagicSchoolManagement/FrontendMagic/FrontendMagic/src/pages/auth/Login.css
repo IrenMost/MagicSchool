@@ -85,7 +85,7 @@
 .message {
     margin-top: 1rem;
     font-size: 1.1rem;
-    color: #e76f51; /* Use a red/orange color for error or success message */
+    color: #4c8c4a; /* Use a green color for error or success message */
     text-align: center;
 }
 

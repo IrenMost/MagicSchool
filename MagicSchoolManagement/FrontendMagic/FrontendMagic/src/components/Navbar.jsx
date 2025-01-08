@@ -6,10 +6,10 @@ export default function Navbar() {
         <nav className="nav-bar">
             
             <Link to={"/teacher/houseList"}>
-                <button>HouseList</button>
+                <button>PointList</button>
             </Link>
             <Link to={"/director/teacherList"}>
-                <button>Teacher`s list</button>
+                <button>Teacherlist</button>
             </Link>
             <Link to={"/login" }>
                 <button>Login</button>

@@ -14,6 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 using BackendMagic.Services.Authentication;
 using System.Text;
 using BackendMagic.Services.Authentication.Token;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 
 
 
@@ -46,19 +48,26 @@ namespace BackendMagic
                 builder.Services.AddDbContext<SchoolContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-               
 
 
-                // Add Identity services
-                services.AddIdentity<IdentityUser, IdentityRole>()
+
+                //Add Identity services
+                builder.Services.AddIdentityCore<IdentityUser>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<SchoolContext>()
+           
                     .AddDefaultTokenProviders();
 
-                // Register the UserService and RoleManagementService
-                 
-                services.AddScoped<RoleManagementService>();
+
+                // Register the  RoleManagementService
+                builder.Services.AddScoped<RoleManagementService>();
                 
-                services.AddScoped<TokenExtractor>();
+                
+
+                // register Seedhelpers
+                //services.AddScoped<HelpStudentSeeder>();
+                //services.AddScoped<HelpHouseElfSeeder>();
+                //services.AddScoped<HelpTeacherSeeder>();
 
                 // JWT Configuration
                 var jwtSettings = configuration.GetSection("Jwt");
@@ -75,7 +84,16 @@ namespace BackendMagic
                                         ValidateIssuerSigningKey = true,
                                         ValidIssuer = jwtSettings["ValidIssuer"],
                                         ValidAudience = jwtSettings["ValidAudience"],
-                                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey))
+                                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey)),
+                                        RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                                    };
+                                    options.Events = new JwtBearerEvents
+                                    {
+                                        OnMessageReceived = context =>
+                                        {
+                                            context.Token = context.Request.Cookies["jwt"];
+                                            return Task.CompletedTask;
+                                        }
                                     };
                                 });
 
@@ -97,8 +115,8 @@ namespace BackendMagic
                 builder.Services.AddScoped<IGradeService, GradeService>();
 
 
-                services.AddScoped<IAuthService, AuthService>();
-                services.AddScoped<ITokenManager, TokenManager>();
+                builder.Services.AddScoped<IAuthService, AuthService>();
+                builder.Services.AddScoped<ITokenManager, TokenManager>();
                 // add CORS
 
                 builder.Services.AddCors(options =>
@@ -132,33 +150,43 @@ namespace BackendMagic
 
                 app.UseAuthentication();
                 app.UseAuthorization();
-             
+
+                
+
+
+
 
                 app.MapControllers();
 
 
 
-               // Seed data
+                //Seed data
                 using (var scope = app.Services.CreateScope())
                 {
                     var services = scope.ServiceProvider;
                     var context = services.GetRequiredService<SchoolContext>();
 
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
 
-                    SeedData.Initialize(services).GetAwaiter().GetResult();
+                    //SeedData.Initialize(services).GetAwaiter().GetResult();
                 }
 
                 using (var scope = app.Services.CreateScope())
                 {
                     var roleManagementService = scope.ServiceProvider.GetRequiredService<RoleManagementService>();
+                    //   var helpTeacherSeeder = scope.ServiceProvider.GetRequiredService<HelpTeacherSeeder>();
+                    //    var helpHouseElfSeeder = scope.ServiceProvider.GetRequiredService<HelpHouseElfSeeder>();
+                    //    var helpStudentSeeder = scope.ServiceProvider.GetRequiredService<HelpStudentSeeder>();
+
+
                     await roleManagementService.EnsureRolesAndClaimsAsync();
+                    //    await helpStudentSeeder.EnsureStudentsAsync(SeedData.Students);
                 }
 
             }
-            
 
-            
+
+
         }
     }
 }

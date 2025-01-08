@@ -5,8 +5,9 @@ const LayoutDirector = () => {
         <div className="container">
 
             <main className="main">
-                <Outlet />
                 <p> welcome mr Dumbledore </p>
+                <Outlet />
+                
             </main>
 
         </div>

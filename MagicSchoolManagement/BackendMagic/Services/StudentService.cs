@@ -13,10 +13,25 @@ namespace BackendMagic.Services
         private readonly IGradeRepository _gradeRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly UserManager<IdentityUser> _userManager;
-        public Task<Student> AddCourseToAStudent(int studnetId, Course course, bool IsAdd)
+
+        public StudentService(IHouseRepository houseRepository, IStudentRepository studentRepository, IGradeRepository gradeRepository, IRoomRepository roomRepository, UserManager<IdentityUser> userManager)
         {
-            throw new NotImplementedException();
+            _houseRepository = houseRepository;
+            _studentRepository = studentRepository;
+            _gradeRepository = gradeRepository;
+            _roomRepository = roomRepository;
+            _userManager = userManager;
         }
+
+        public async Task<Student> AddCourseToAStudent(int studnetId, Course course, bool IsAdd)
+        {
+            
+                var student = await _studentRepository.GetStudentById(studnetId);
+                student.MyCourses.Add(course);
+                await _studentRepository.UpdateStudent(student);
+                return student;
+            
+        }   
 
         public async Task<List<Student>> GetAllStudents()
         {

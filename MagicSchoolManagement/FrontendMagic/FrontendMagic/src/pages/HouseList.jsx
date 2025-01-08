@@ -41,7 +41,7 @@ const HouseList = () => {
         fetchAllHouseData().then((data) => {
             setHouseList(data);
             console.log(data);
-            console.log(document.cookie);
+          
             setLoading(false);
         });
     }, [counter]);

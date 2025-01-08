@@ -1,6 +1,9 @@
 ﻿import { useState, useContext } from "react";
 import { DataContext } from "../../context/DataContext.jsx";
+import { useNavigate } from "react-router-dom";
 import './Login.css';
+
+
 
 
 const Login = () => {
@@ -8,6 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const { setGlobalData } = useContext(DataContext);
+    const navigate = useNavigate(); 
 
     
 
@@ -30,11 +34,25 @@ const Login = () => {
 
 
                 console.log(user);
+              
                 setGlobalData(user);
                 localStorage.setItem("user", JSON.stringify(user));
               
                 
                 setMessage("Login successful.");
+                setTimeout(() => {
+                    
+                    if (user.level === "Teacher") {
+                        navigate("/teacher"); 
+                    } else if (user.role === "Director") {
+                        navigate("/director"); 
+                    } else if (user.role === "Student") {
+                        navigate("/student");
+                    } else {
+                        navigate("/"); 
+                    }
+                }, 5000); // 5-second delay
+            
                
             } else {
                 setMessage("Login failed.");
@@ -59,6 +77,7 @@ const Login = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         className="form-input"
+                        autoComplete="email"
                     />
                 </div>
                 <div className="form-group">
@@ -77,6 +96,7 @@ const Login = () => {
                 </button>
             </form>
             {message && <p className="message">{message}</p>}
+            
         </div>
     );
 };

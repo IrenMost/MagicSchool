@@ -21,6 +21,14 @@ namespace BackendMagic.Repository
 
         }
 
+        public async Task AddStudentToARoom(Student student, int roomId)
+        {
+            var room = await _dbContext.Rooms.FirstOrDefaultAsync(r => r.RoomId == roomId);
+            room.Students.Add(student);
+            await _dbContext.SaveChangesAsync();
+
+        }
+
         public async Task<Room> GetRoomById(int roomId)
         {
            return await _dbContext.Rooms.FirstOrDefaultAsync(r => r.RoomId == roomId);

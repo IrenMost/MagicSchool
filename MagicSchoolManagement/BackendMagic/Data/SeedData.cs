@@ -1,4 +1,5 @@
-﻿using BackendMagic.DTOs.Auth;
+﻿using BackendMagic.Data.SeedingDto;
+using BackendMagic.DTOs.Auth;
 using BackendMagic.Model;
 using BackendMagic.Model.Enums;
 using BackendMagic.Repository;
@@ -8,6 +9,7 @@ using BackendMagic.Services.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Reflection;
@@ -27,14 +29,47 @@ namespace BackendMagic.Data
             var gradeRepository = serviceProvider.GetService<IGradeRepository>();
             var studentRepository = serviceProvider.GetService<IStudentRepository>();
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var roleManagementService = serviceProvider.GetRequiredService<RoleManagementService>();
+            //var helpSeedStudents = serviceProvider.GetRequiredService<HelpStudentSeeder>();
+            //var helpSeedTeachers = serviceProvider.GetRequiredService<HelpTeacherSeeder>();
+            //var helpSeedHouseElves = serviceProvider.GetRequiredService<HelpHouseElfSeeder>();
+
+
+            
+
+            if (houseRepository == null)
+            {
+                throw new InvalidOperationException("IHouseRepository is not registered in the DI container.");
+            }
+            if (houseElfRepository == null)
+            {
+                throw new InvalidOperationException("IHouseElfRepository is not registered in the DI container.");
+            }
+            if (roomRepository == null)
+            {
+                throw new InvalidOperationException("IRoomRepository is not registered in the DI container.");
+            }
+            if (teacherRepository == null)
+            {
+                throw new InvalidOperationException("ITeacherRepository is not registered in the DI container.");
+            }
+            if (gradeRepository == null)
+            {
+                throw new InvalidOperationException("IGradeRepository is not registered in the DI container.");
+            }
+            if (studentRepository == null)
+            {
+                throw new InvalidOperationException("IStudnetRepositroy is not registered in the DI container.");
+            }
 
 
             // roles
             await roleManagementService.EnsureRolesAndClaimsAsync();
 
-          
+            // students
+       
+            
+
 
             // help seed teachers
             async Task EnsureTeacherAsync(UserManager<IdentityUser> userManager, ITeacherRepository teacherRepository,
@@ -80,69 +115,8 @@ namespace BackendMagic.Data
             }
 
 
-            // student HelpSeeding
-
-            async Task EnsureStudentAsync(UserManager<IdentityUser> userManager, IStudentRepository studentRepository,
-                string userName,
-                string email,
-                string password,
-                string firstName,
-                string lastName,
-                Model.Enums.Gender gender,
-                Model.Enums.Pet pet,
-                Model.Enums.HouseName houseName,
-                Model.Enums.GradeType gradeType,
-                string role = "Student")
-            {
-                // Check if IdentityUser exists
-                var user = await userManager.FindByNameAsync(userName);
-                if (user == null)
-                {
-                    user = new IdentityUser { UserName = userName, Email = email };
-                    var result = await userManager.CreateAsync(user, password);
-
-                    user.EmailConfirmed = true;
-                    await userManager.UpdateAsync(user);
-
-                    if (result.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(user, role);
-                    }
-                }
-
-                // Check if Student entity exists
-                if ((await studentRepository.GetStudentByIdentityUserId(user.Id)) == null)
-                {
-                    // Create the Student entity, setting HouseId, RoomId, and GradeId based on the enum values passed
-                    var student = new Student(
-                                    firstName: firstName,
-                                    lastName: lastName,
-                                    gender: gender,
-                                    pet: pet,
-                                    houseId: (int)houseName,
-                                    gradeId: (int)gradeType,
-                                    identityUserId: user.Id
-        );
-
-
-                    await studentRepository.AddAsync(student);
-                }
-            }
-
-            if (houseRepository == null)
-            {
-                throw new InvalidOperationException("IHouseRepository is not registered in the DI container.");
-            }
-            if (teacherRepository == null)
-            {
-                throw new InvalidOperationException("ITeacherRepository is not registered in the DI container.");
-            }
-
-            if (gradeRepository == null)
-            {
-                throw new InvalidOperationException("IGradeRepository is not registered in the DI container.");
-            }
-
+            
+            
 
             var teachers = await teacherRepository.GetAllTeachers();
 
@@ -270,26 +244,63 @@ namespace BackendMagic.Data
             }
 
 
-            //var students = await studentRepository.GetAllStudents();
+            // seed rooms 1 large and 4 for each houses
 
-            //if (students.Count == 0)
-            //{
-            //    await EnsureStudentAsync(userManager, studentRepository,
-            //        userName: "HarryPotter",
-            //        email: $"HarryPotter@hogwarts.edu",
-            //        password: "PotterPassword123!",
-            //        firstName: "Harry",
-            //        lastName: "Potter",
-            //        gender: Model.Enums.Gender.Male,
-            //        pet: Model.Enums.Pet.Owl,
-            //        houseName: Model.Enums.HouseName.Gryffindor,
-            //        gradeType: Model.Enums.GradeType.second); 
-            //}
+            if (roomRepository == null)
+            {
+                throw new InvalidOperationException("IRoomRepository is not registered in the DI container.");
+            }
 
+            var rooms = await roomRepository.GetRooms();
+            if (rooms.Count == 0)
+            {
+                
+                var largeRoom = new Room
+                {
+                    MaxCapacity = 200,
+                    HouseId = 3 // RavenClaw is the most wellcoming house
+                };
+                await roomRepository.AddRoomAsync(largeRoom);
 
+                // add 4 for each houses
+                var houses = await houseRepository.GetHouses();
+
+                if (houses != null && houses.Count > 0)
+                {
+                    foreach (var house in houses)
+                    {
+                        for (int i = 0; i < 4; i++) 
+                        {
+                            var smallRoom = new Room
+                            {
+                                MaxCapacity = 4,
+                                HouseId = house.HouseId
+                            };
+                            await roomRepository.AddRoomAsync(smallRoom);
+                        }
+                    }
+                }
+            }
         }
 
 
+        public static List<StudentData> Students => new List<StudentData>
+    {
+        new StudentData
+        {
+            UserName = "HarryPotter",
+            Email = "HarryPotter@hogwarts.edu",
+            Password = "PotterPassword123!",
+            FirstName = "Harry",
+            LastName = "Potter",
+            Gender = Model.Enums.Gender.Male,
+            Pet = Model.Enums.Pet.Owl,
+            HouseId = 1,
+            RoomId = 1,
+            GradeId = 2,
+            Role = "Student"
+        }
+    };
 
     }
 }

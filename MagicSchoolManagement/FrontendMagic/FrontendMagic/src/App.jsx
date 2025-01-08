@@ -1,12 +1,13 @@
 import './App.css';
 import { useRoutes } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import  {  useState } from 'react';
 import HouseList from './pages/HouseList';
 import TeacherList from './pages/TeacherList';
 import TeacherUpdater from './pages/updaters/TeacherUpdaterCourse';
 import LayoutHome from './components/LayoutHome';
 import LayoutTeacher from './components/LayoutTeacher';
 import HomePage from "./pages/HomePage";
+import TeacherHome from "./pages/TeacherHome";
 import LayoutDirector from './components/LayoutDirector';
 import Login from "./pages/auth/Login";
 import Logout from "./pages/auth/Logout";
@@ -34,7 +35,7 @@ function App() {
         {
             path: "/teacher",
             element: <LayoutTeacher />, 
-            children: [{ index: true, element: <HouseList /> },
+            children: [{ index: true, element: <TeacherHome /> },
                 { path: "HouseList", element: <HouseList /> },
                 
             ],

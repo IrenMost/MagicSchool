@@ -11,5 +11,6 @@ namespace BackendMagic.Repository.Interfaces
         Task UpdateRoom (Room room);
 
         Task SaveChangesAsync();
+        Task AddStudentToARoom(Student student, int roomId);
     }
 }

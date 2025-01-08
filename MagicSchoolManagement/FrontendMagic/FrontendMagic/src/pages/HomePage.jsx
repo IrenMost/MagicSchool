@@ -1,13 +1,11 @@
-﻿import { DataContext } from "../context/DataContext"
-import {useContext } from "react"
+﻿
 //import "./HomePage.css";
 import Navbar from "../components/Navbar"
 
 
 export default function HomePage() {
 
-    const { globalData } = useContext(DataContext);
-    console.log(globalData);
+    
 
     return (
         <div className="homepage">
@@ -15,7 +13,7 @@ export default function HomePage() {
             <img src="wand.png" alt="logo" className="header-logo" />
             <header className="header">
                 <h1 className="header-title">
-                    Hello {globalData && globalData.username} user!
+                    Hello!
 
 
                 </h1>

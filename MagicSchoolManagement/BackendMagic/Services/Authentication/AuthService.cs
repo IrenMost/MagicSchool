@@ -12,7 +12,7 @@ namespace BackendMagic.Services.Authentication
     public class AuthService : IAuthService
     {
         private readonly UserManager<IdentityUser> _userManager; 
-        private readonly RoleManager<IdentityRole> _roleManager;
+        
         private readonly ITokenManager _tokenManager;
         private readonly IHouseElfRepository _houseElfRepository;
         private readonly IStudentRepository _studentRepository;
@@ -20,9 +20,9 @@ namespace BackendMagic.Services.Authentication
         private readonly IHouseRepository _houseRepository;
         private readonly IGradeRepository _gradeRepository;
 
-        public AuthService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IHouseElfRepository houseElfRepository, IStudentRepository studentRepository, ITeacherRepository teacherRepository, ITokenManager tokenManager, IHouseRepository houseRepository, IGradeRepository gradeRepository )
+        public AuthService(UserManager<IdentityUser> userManager,  IHouseElfRepository houseElfRepository, IStudentRepository studentRepository, ITeacherRepository teacherRepository, ITokenManager tokenManager, IHouseRepository houseRepository, IGradeRepository gradeRepository )
         {
-            _roleManager = roleManager;
+            
             _userManager = userManager;
             _tokenManager = tokenManager;
             _houseElfRepository = houseElfRepository;

@@ -1,11 +1,15 @@
 ﻿import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
+import './Logout.css';
 
 const Logout = () => {
     const navigate = useNavigate();
+    const { setGlobalData } = useContext(DataContext); 
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('https://localhost:7135/Auth/logout', {
+            const response = await fetch('/api/Auth/logout', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -15,6 +19,8 @@ const Logout = () => {
 
             if (response.ok) {
                 alert('Logout successful.');
+                setGlobalData(null); // Reset global data to null
+                localStorage.removeItem("user"); 
                 navigate('/');
             } else {
                 const errorText = await response.text();

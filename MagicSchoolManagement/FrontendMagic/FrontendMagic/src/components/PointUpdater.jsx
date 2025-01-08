@@ -3,20 +3,16 @@ import './PointUpdater.css';
 import { useState, } from "react";
 import PropTypes from "prop-types"; 
 
+
+
 const PointUpdater = ({
     houseId,
-   
     setCounter 
 }) => {
     const [pointsToAddOrTakeaway, setPointsToAddOrTakeaway] = useState("");
+   
+
     
-
-    const token = document.cookie // assuming the token is stored as a cookie
-        .split('; ')
-        .find(row => row.startsWith('Authorization='))
-        ?.split('=')[1];
-
-
     const handleSubmitPlus = async () => {
 
         if (pointsToAddOrTakeaway < 0) {
@@ -30,7 +26,7 @@ const PointUpdater = ({
                 credentials: 'include', // to make the server read the jwt cookie
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`, // Pass the token here
+         
                 },
                 body: JSON.stringify({ houseId: parseInt(houseId), points: parseInt(pointsToAddOrTakeaway), isAdd: true }),
             });
@@ -54,8 +50,9 @@ const PointUpdater = ({
             return;
         }
         try {
-            const response = await fetch(`https://localhost:7135/House/updatePoints/${houseId}`, {
+            const response = await fetch(`/api/House/updatePoints/${houseId}`, {
                 method: "PATCH",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -110,7 +107,7 @@ const PointUpdater = ({
 
 PointUpdater.propTypes = {
     houseId: PropTypes.string.isRequired,
-   
+
     setCounter: PropTypes.func.isRequired
 };
 
