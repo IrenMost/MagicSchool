@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import  {  useState } from 'react';
 import HouseList from './pages/HouseList';
 import TeacherList from './pages/TeacherList';
-import TeacherUpdater from './pages/updaters/TeacherUpdaterCourse';
+
 import LayoutHome from './components/LayoutHome';
 import LayoutTeacher from './components/LayoutTeacher';
 import HomePage from "./pages/HomePage";
@@ -46,7 +46,7 @@ function App() {
             element: <LayoutDirector />,
             children: [{ index: true, element: <TeacherList /> },
                 { path: "TeacherList", element: <TeacherList /> },
-                { path: "TeacherUpdater/:teacherId", element: <TeacherUpdater /> }
+               
             ],
 
         },
