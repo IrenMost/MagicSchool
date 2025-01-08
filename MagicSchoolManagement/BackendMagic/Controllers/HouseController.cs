@@ -35,8 +35,10 @@ namespace BackendMagic.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<List<House>>> GetAllFourHouses()
         {
+            
             try
             {
+                
                 var houses = await _houseService.GetAllHouses();
                 if (houses == null || houses.Count == 0)
                 {
@@ -104,9 +106,11 @@ namespace BackendMagic.Controllers
             return Ok(houseDto);
         }
 
-        [HttpPatch("updatePoints/{houseId}"),  Authorize(Roles = ("Teacher, Headmaster, Director, Ministry"))]
+        [HttpPatch("updatePoints/{houseId}")]
+        [Authorize(Roles =("Teacher, Headmaster, Director, Ministry"))]
         public async Task<ActionResult<House>> UpdatePoints(int houseId, [FromBody] UpdateHousePointsReq updateHousePointsReq)
         {
+            
             try
             {
                 

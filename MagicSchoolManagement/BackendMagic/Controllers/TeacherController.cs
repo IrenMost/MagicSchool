@@ -91,7 +91,7 @@ namespace BackendMagic.Controllers
             return Ok(teacherDto);
         }
 
-        [HttpPatch("updateTeacherCourse/{teacherId}")]
+        [HttpPatch("updateTeacherCourse/{teacherId}/{course}")]
         public async Task<ActionResult<House>> UpdateCourse(int teacherId, Course course)
         {
             try

@@ -113,7 +113,12 @@ namespace BackendMagic.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
+            var roles = User.Claims
+                    .Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")
+                    .Select(c => c.Value)
+                    .ToList();
 
+            Console.WriteLine($"Roles in token: {string.Join(", ", roles)}");
             Console.WriteLine(model.Email);
             if (!ModelState.IsValid)
             {
@@ -121,7 +126,8 @@ namespace BackendMagic.Controllers
             }
 
             var token = await _authService.GetUserId(model);
-           
+            //this returns a token _tokenManager.GenerateToken(user, roles);
+
 
             if (token != null)
             {
@@ -129,7 +135,7 @@ namespace BackendMagic.Controllers
                 {
                     HttpOnly = true,
                     Secure = false, // For local development only; set to true in production
-                    SameSite = SameSiteMode.None,
+                    SameSite = SameSiteMode.Lax,
                     Expires = DateTime.UtcNow.AddMinutes(30)
                 };
 
