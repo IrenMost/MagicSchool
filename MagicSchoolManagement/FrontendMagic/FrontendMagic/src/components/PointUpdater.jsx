@@ -26,7 +26,6 @@ const PointUpdater = ({
                 credentials: 'include', // to make the server read the jwt cookie
                 headers: {
                     "Content-Type": "application/json",
-         
                 },
                 body: JSON.stringify({ houseId: parseInt(houseId), points: parseInt(pointsToAddOrTakeaway), isAdd: true }),
             });

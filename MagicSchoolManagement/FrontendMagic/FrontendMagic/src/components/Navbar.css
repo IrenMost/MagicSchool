@@ -1,23 +1,32 @@
-.navbar {
+.nav-bar {
     display: flex;
     justify-content: center;
+    align-items: center; /* Align items vertically to the middle */
     gap: 0.5rem;
     padding: 1rem;
-    background-color: #1a2a3a; /* Matches the background color */
+    background-color: #1a2a3a;
 }
-
-    /* Styling for individual buttons in the nav bar */
+    .nav-bar a {
+        text-decoration: none; /* Remove underline */
+        border: none; /* Remove any default border styling */
+    }
     .nav-bar button {
-        width: 80px;
-        height: 40px;
-        border-radius: 20px; /* Oval shape */
-        border: 2px solid #a8e6cf; /* Matches mouse color */
-        background-color: #1f3a4a; /* Slightly darker than the background color */
-        color: #a8e6cf; /* Matches mouse color */
+        width: 120px;
+        height: 60px;
+        border-radius: 20px;
+        border: 2px solid #a8e6cf;
+        background-color: #1f3a4a;
+        color: #a8e6cf;
         font-size: 1rem;
         font-family: 'Mountains of Christmas', cursive;
+        text-align: center;
+        line-height: 1.2;
+        display: flex; /* Use flexbox for centering */
+        justify-content: center; /* Center text horizontally */
+        align-items: center; /* Center text vertically */
         transition: all 0.3s ease;
         cursor: pointer;
+        padding: 0.5rem; /* Adjust padding for multi-line text */
     }
 
         /* Hover effect to add a subtle glow */
