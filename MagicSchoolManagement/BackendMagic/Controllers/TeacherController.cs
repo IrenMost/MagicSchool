@@ -3,6 +3,7 @@ using BackendMagic.Model;
 using BackendMagic.Model.Enums;
 using BackendMagic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackendMagic.Controllers
 {
@@ -92,6 +93,7 @@ namespace BackendMagic.Controllers
         }
 
         [HttpPatch("updateTeacherCourse/{teacherId}/{course}")]
+        [Authorize(Roles = ("Director, Ministry"))]
         public async Task<ActionResult<House>> UpdateCourse(int teacherId, Course course)
         {
             try

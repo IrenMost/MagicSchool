@@ -127,6 +127,7 @@ namespace BackendMagic.Controllers
         }
 
         [HttpPatch("updateHeadmaster")]
+        [Authorize(Roles = ("Director, Ministry"))]
         public async Task<ActionResult<House>> UpdateHeadmaster([FromBody] UpdateHeadmasterReq updateHeadmasterReq)
         {
             try
