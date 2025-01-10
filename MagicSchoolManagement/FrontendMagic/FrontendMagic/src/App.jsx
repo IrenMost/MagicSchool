@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import  {  useState } from 'react';
 import HouseList from './pages/HouseList';
 import TeacherList from './pages/TeacherList';
+import AssignAHeadmaster from './pages/AssignAHeadmaster';
 
 import LayoutHome from './components/LayoutHome';
 import LayoutTeacher from './components/LayoutTeacher';
@@ -46,6 +47,7 @@ function App() {
             element: <LayoutDirector />,
             children: [{ index: true, element: <TeacherList /> },
                 { path: "TeacherList", element: <TeacherList /> },
+                { path: "AssignAHeadmaster", element: <AssignAHeadmaster />}
                
             ],
 

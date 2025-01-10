@@ -49,11 +49,13 @@ namespace BackendMagic.Controllers
                 // Map each House to HouseDto
                 foreach (var house in houses)
                 {
+                    var headmaster = await _teacherService.GetTeacherById(house.TeacherId);
                     var houseDto = new HouseDto
                     {
                         HouseId = house.HouseId,
                         HouseName = house.HouseName.ToString(), 
                         Points = house.Points,
+                        Headmaster = headmaster.FirstName + " " + headmaster.LastName,
                         TeacherId = house.TeacherId,
                         Students = house.Students,
                         Rooms = house.Rooms
@@ -124,12 +126,12 @@ namespace BackendMagic.Controllers
             }
         }
 
-        [HttpPatch("updateHeadmaster/{houseId}")]
-        public async Task<ActionResult<House>> UpdateHeadmaster(int houseId, int teacherId)
+        [HttpPatch("updateHeadmaster")]
+        public async Task<ActionResult<House>> UpdateHeadmaster([FromBody] UpdateHeadmasterReq updateHeadmasterReq)
         {
             try
             {
-                var house = await _houseService.UpdateHouseAddHeadMasterByHouseId(houseId, teacherId);
+                var house = await _houseService.UpdateHouseAddHeadMasterByHouseId(updateHeadmasterReq.HouseId, updateHeadmasterReq.TeacherId);
 
                 return Ok(house);
             }

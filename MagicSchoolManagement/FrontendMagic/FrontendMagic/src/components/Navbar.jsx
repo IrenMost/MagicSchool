@@ -9,12 +9,17 @@ export default function Navbar() {
                 <button>PointList</button>
             </Link>
             <Link to={"/director/teacherList"}>
-                <button>Teacherlist</button>
+                <button>Teacher`s courses</button>
+            </Link>
+            <Link to={"/director/assignAHeadmaster"}>
+                <button>Assign a Headmaster</button>
             </Link>
             <Link to={"/login" }>
                 <button>Login</button>
             </Link>
-            <button>More</button>
+            
+            
+         
             {/*<Link to={"/register"}>*/}
             {/*    <button>Register</button>*/}
             {/*</Link>*/}
