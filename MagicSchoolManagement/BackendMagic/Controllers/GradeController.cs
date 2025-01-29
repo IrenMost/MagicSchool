@@ -36,7 +36,7 @@ namespace BackendMagic.Controllers
                 }
                 var gradeDtos = new List<GradeDto>();
 
-                // Map each House to HouseDto
+               
                 foreach (var grade in grades)
                 {
                     var gradeDto = new GradeDto
@@ -46,11 +46,11 @@ namespace BackendMagic.Controllers
                        ChooseableCourses = grade.ChooseableCourses,
                     };
 
-                    // Add the DTO to the list
+                    
                     gradeDtos.Add(gradeDto);
                 }
 
-                // Return the list of DTOs
+               
                 return Ok(gradeDtos);
 
 

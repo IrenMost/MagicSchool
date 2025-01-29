@@ -144,6 +144,7 @@ namespace BackendMagic.Controllers
                 var entity = await _authService.FindEntity(model);
 
                 // Await FindEntity to retrieve the user type and entity data
+                // because the entity should be identified based on the email address
                
                 if (entity != null)
                 {

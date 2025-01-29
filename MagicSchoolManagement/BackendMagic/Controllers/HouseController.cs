@@ -9,7 +9,7 @@ using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BackendMagic.Controllers 
-// Handles HTTP requests and responses, delegating all business logic to the service layer.
+
 {
     [ApiController]
     [Route("/api/[controller]")]
@@ -17,7 +17,7 @@ namespace BackendMagic.Controllers
     {
         private readonly ILogger<HouseController> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IHouseService _houseService; // Only interact with service
+        private readonly IHouseService _houseService; 
         private readonly ITeacherService _teacherService;
        
        
@@ -65,7 +65,7 @@ namespace BackendMagic.Controllers
                     houseDtos.Add(houseDto);
                 }
 
-                // Return the list of DTOs
+                
                 return Ok(houseDtos);
 
 

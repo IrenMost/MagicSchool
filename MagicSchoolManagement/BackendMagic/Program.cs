@@ -117,7 +117,7 @@ namespace BackendMagic
 
                 builder.Services.AddScoped<IAuthService, AuthService>();
                 builder.Services.AddScoped<ITokenManager, TokenManager>();
-                // add CORS
+                // add CORS ez már nem is kell
 
                 builder.Services.AddCors(options =>
                 {
@@ -125,14 +125,14 @@ namespace BackendMagic
                     {
                    
                         builder.WithOrigins("http://localhost:5173")    // "http://localhost:5174", "https://localhost:7135/swagger/index.html" ?
-                                .AllowAnyMethod()                      // Allow GET, POST, PUT, DELETE, etc.
-                                .AllowAnyHeader()                      // Allow custom headers
-                                .AllowCredentials();                   // Allow cookies or other credentials if needed
+                                .AllowAnyMethod()                     
+                                .AllowAnyHeader()                      
+                                .AllowCredentials();                   // cookie miatt kell
                     });
                 });
 
                 builder.Services.AddControllers();
-                // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+               
                 builder.Services.AddEndpointsApiExplorer();
                 builder.Services.AddSwaggerGen();
             }

@@ -39,13 +39,13 @@ namespace BackendMagic.Services.Authentication
 
             if (user == null)
             {
-                return null; // Email not found
+                return null;
             }
 
             var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             if (!isPasswordValid)
             {
-                return null; // Invalid password
+                return null; 
             }
 
             // Determine which type of entity the user is (student, houseelf or teacher

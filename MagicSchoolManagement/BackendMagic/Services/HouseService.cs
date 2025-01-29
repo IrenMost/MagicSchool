@@ -7,9 +7,7 @@ using System.Security.Claims;
 
 namespace BackendMagic.Services
 {
-    // Contains the business logic.
-    // It fetches data from the repository and processes it according to the business rules
-    // before returning it to the controller.
+    
     public class HouseService : IHouseService
     {
         private readonly IHouseRepository _houseRepository;

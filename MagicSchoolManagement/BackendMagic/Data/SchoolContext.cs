@@ -103,7 +103,7 @@ namespace BackendMagic.Data
                 .HasOne(t => t.IdentityUser)
                 .WithOne() // No collection in IdentityUser for teachers, so this is left empty
                 .HasForeignKey<Teacher>(t => t.IdentityUserId)
-                .OnDelete(DeleteBehavior.Restrict); // Use Restrict or Cascade based on your needs
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Student>()
                 .HasOne(s => s.IdentityUser)
